@@ -32,5 +32,3 @@ function startGame() {
 }
 
 startGame();
-
-console.log(visualViewport.height);
