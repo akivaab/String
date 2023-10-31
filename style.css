@@ -6,14 +6,16 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: hidden; /* Hide vertical scrollbar */
+    background-color: bisque;
   }
   
-.grid {
+#grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(10, 1fr);
     max-height: 100vh; /* Set the maximum height to fit the viewport */
     width: calc(100vh / 10 * 5); /* Calculate the width based on 10 rows and 5 columns, maintaining 1:1 aspect ratio */
+    border: 1px solid #000;
     /*padding-right: 30px;*/
 }
   
@@ -24,4 +26,14 @@ body {
   
 .empty {
     background-color: transparent;
+}
+
+.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: antiquewhite;
+    font-size: xx-large;
+    font-weight: bolder;
+    border-radius: 10%;
 }
