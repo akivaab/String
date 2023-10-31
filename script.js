@@ -2,13 +2,13 @@ import { addNewTile, dropTiles } from "./tile.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
+    setInterval(function() { addNewTile(game); }, 997);
+    setInterval(function() { dropTiles(game); }, 293);
 
-    function gameLoop(deltaTime) {
-        //addNewTile(game);
-        //dropTiles(game);
+    function gameLoop() {
         requestAnimationFrame(gameLoop);
     }
-    gameLoop(0);
+    gameLoop();
 })
 
 export class Game {
@@ -18,8 +18,5 @@ export class Game {
         const gridComputedStyle = window.getComputedStyle(this.grid);
         this.numRows = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
         this.numColumns = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
-    }
-    update() {
-
     }
 }
