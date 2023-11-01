@@ -1,7 +1,9 @@
 import { addNewTile, dropTiles } from "./tile.js";
+import setupInputHandler from "./input.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
+    setupInputHandler(game);
     setInterval(function() { addNewTile(game); }, 997);
     setInterval(function() { dropTiles(game); }, 293);
 
