@@ -4,7 +4,7 @@ import { isAdjacent } from "./tile.js";
 let isMousePressed = false;
 let isTouchPressed = false;
 let lastTilePressed = null;
-let wordTraced = [];
+let tilesTraced = [];
 
 function handleMouseMove(event) {
     if (isMousePressed) {
@@ -14,7 +14,7 @@ function handleMouseMove(event) {
         {
             target.classList.add('touched');
             lastTilePressed = target;
-            wordTraced.push(target.innerHTML);
+            tilesTraced.push(target);
         }
     }
 }
@@ -33,7 +33,7 @@ function handleTouchMove(event) {
             {
                 target.classList.add('touched');
                 lastTilePressed = target;
-                wordTraced.push(target.innerHTML);
+                tilesTraced.push(target);
             }
         }
     }
@@ -70,12 +70,39 @@ export default function setupInputHandler(game) {
 }
 
 function checkWordValidity() {
-    /*
-    if (tracedWord is word) {
-        make all touched tiles empty
+    let wordTraced = "";
+    tilesTraced.forEach(tile => wordTraced += tile.innerHTML);
+
+    // only words 3+ letters long
+    if (wordTraced.length >= 3) {
+        wordTraced = wordTraced.toLowerCase();
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordTraced}`)
+            .then(response => {
+                if (response.ok) return response.json();
+                else throw new Error('Not a word.');
+            })
+            .then(data => {
+                if (data[0].meanings) {
+                    tilesTraced.forEach(tile => {
+                        tile.classList.remove('tile', 'touched');
+                        tile.classList.add('empty');
+                        tile.innerHTML = '';
+                    });
+                    tilesTraced = [];
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                tilesTraced.forEach(tile => {
+                    tile.classList.remove('touched');
+                });
+                tilesTraced = [];
+            });
     }
     else {
-        make touched tiles back to normal
+        tilesTraced.forEach(tile => {
+            tile.classList.remove('touched');
+        });
+        tilesTraced = [];
     }
-    */
 }
