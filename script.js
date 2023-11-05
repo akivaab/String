@@ -20,5 +20,9 @@ export class Game {
         const gridComputedStyle = window.getComputedStyle(this.grid);
         this.numRows = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
         this.numColumns = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
+        this.score = 0;
+    }
+    increaseScore(wordLength) {
+        this.score += wordLength ** 2 - wordLength;
     }
 }

@@ -69,6 +69,10 @@ export default function setupInputHandler(game) {
     game.grid.addEventListener('touchmove', handleTouchMove);
 }
 
+/**
+ * 
+ * @param {Game} game 
+ */
 function checkWordValidity(game) {
     let wordTraced = "";
     tilesTraced.forEach(tile => wordTraced += tile.innerHTML);
@@ -94,6 +98,7 @@ function checkWordValidity(game) {
                         }, 80);
                         markAboveAsFalling(game, tile);
                     });
+                    game.increaseScore(wordTraced.length);
                     tilesTraced = [];
                 }
             })
