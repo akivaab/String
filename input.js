@@ -1,5 +1,5 @@
 import { Game } from "./script.js";
-import { isAdjacent } from "./tile.js";
+import { isAdjacent, markAboveAsFalling } from "./tile.js";
 
 let isMousePressed = false;
 let isTouchPressed = false;
@@ -10,7 +10,7 @@ function handleMouseMove(event) {
     if (isMousePressed) {
         const target = event.target;
         if (target.classList.contains('tile') && !target.classList.contains('falling') && 
-            isAdjacent(target, lastTilePressed)) 
+            isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target)) 
         {
             target.classList.add('touched');
             lastTilePressed = target;
@@ -23,7 +23,7 @@ function handleTouchMove(event) {
     if (isTouchPressed) {
         const target = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
         if (target && target.classList.contains('tile') && !target.classList.contains('falling')
-            && isAdjacent(target, lastTilePressed)) 
+            && isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target))
         {
             const tileRect = target.getBoundingClientRect();
             const centerX = tileRect.left + tileRect.width / 2;
@@ -49,12 +49,12 @@ export default function setupInputHandler(game) {
     document.addEventListener('mouseup', () => {
         isMousePressed = false;
         lastTilePressed = null;
-        checkWordValidity();
+        checkWordValidity(game);
     });
     game.grid.addEventListener('mouseleave', () => {
         isMousePressed = false;
         lastTilePressed = null;
-        checkWordValidity();
+        checkWordValidity(game);
     });
     game.grid.addEventListener('mousemove', handleMouseMove);
 
@@ -64,12 +64,12 @@ export default function setupInputHandler(game) {
     document.addEventListener('touchend', () => {
         isTouchPressed = false;
         lastTilePressed = null;
-        checkWordValidity();
+        checkWordValidity(game);
     });
     game.grid.addEventListener('touchmove', handleTouchMove);
 }
 
-function checkWordValidity() {
+function checkWordValidity(game) {
     let wordTraced = "";
     tilesTraced.forEach(tile => wordTraced += tile.innerHTML);
 
@@ -84,9 +84,15 @@ function checkWordValidity() {
             .then(data => {
                 if (data[0].meanings) {
                     tilesTraced.forEach(tile => {
-                        tile.classList.remove('tile', 'touched');
-                        tile.classList.add('empty');
-                        tile.innerHTML = '';
+                        tile.classList.remove('touched');
+                        tile.classList.add('correct');
+                        setTimeout(function() {
+                            tile.classList.remove('correct');
+                            tile.classList.remove('tile');
+                            tile.classList.add('empty');
+                            tile.innerHTML = '';
+                        }, 80);
+                        markAboveAsFalling(game, tile);
                     });
                     tilesTraced = [];
                 }
@@ -95,6 +101,10 @@ function checkWordValidity() {
                 console.error(error);
                 tilesTraced.forEach(tile => {
                     tile.classList.remove('touched');
+                    tile.classList.add('incorrect');
+                    setTimeout(function() {
+                        tile.classList.remove('incorrect');  
+                    }, 80);
                 });
                 tilesTraced = [];
             });

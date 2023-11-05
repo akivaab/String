@@ -30,13 +30,26 @@ export function dropTiles(game) {
             oldLocation.classList.add('empty');
             
             newLocation.classList.remove('empty');
-            newLocation.classList.add('tile', 'falling');
+            newLocation.classList.add('tile');
+            if (i + game.numColumns < game.cells.length - game.numColumns) newLocation.classList.add('falling');
             newLocation.innerHTML = oldLocation.innerHTML;
             oldLocation.innerHTML = '';
         }
         else {
             oldLocation.classList.remove('falling');
         }
+    }
+}
+
+/**
+ * Mark all tiles above a given tile as falling
+ * @param {Game} game
+ * @param tile
+ */
+export function markAboveAsFalling(game, tile) {
+    let tileIndex = game.cells.findIndex(cell => cell === tile);
+    for (tileIndex; tileIndex >= 0; tileIndex -= game.numColumns) {
+        game.cells[tileIndex].classList.add('falling');
     }
 }
 
