@@ -25,6 +25,7 @@ export class Game {
         this.numRows = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
         this.numColumns = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
         this.score = 0;
+        this.scoreboard = document.getElementById('score');
         this.onStart = true;
         this.paused = false;
         this.gameOver = false;
@@ -33,6 +34,7 @@ export class Game {
         this.dropTileTimer = 0;
         this.dropTileInterval = 293;
         setupInputHandler(this);
+        this.scoreboard.innerHTML = this.score;
     }
     /**
      * Update the game
@@ -58,5 +60,6 @@ export class Game {
      */
     increaseScore(wordLength) {
         this.score += wordLength ** 2 - wordLength;
+        this.scoreboard.innerHTML = this.score;
     }
 }

@@ -5,6 +5,8 @@ let isMousePressed = false;
 let isTouchPressed = false;
 let lastTilePressed = null;
 let tilesTraced = [];
+const listContainer = document.getElementById('list-container');
+const scrollableList = document.querySelector('.scrollable-list');
 let lastClickTime = 0;
 
 function handleMouseMove(event) {
@@ -117,6 +119,10 @@ function checkWordValidity(game) {
                         }, 80);
                         markAboveAsFalling(game, tile);
                     });
+                    scrollableList.style.border = '1px solid #ccc';
+                    const newWord = document.createElement('li');
+                    newWord.innerHTML = wordTraced;
+                    listContainer.appendChild(newWord);
                     game.increaseScore(wordTraced.length);
                     tilesTraced = [];
                 }

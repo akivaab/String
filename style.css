@@ -63,6 +63,27 @@ body {
     text-align: center;
 }
 
+.scrollable-list {
+    max-height: 300px; /* Set a maximum height for the list to make it scrollable */
+    overflow-y: scroll; /* Enable vertical scrolling if the content overflows */
+    /*border: 1px solid #ccc;  Add a border for the scrollable list */
+}
+  
+.scrollable-list ul {
+    list-style: none; /* Remove list bullets */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+  
+.scrollable-list li {
+    padding: 10px; /* Add some padding to list items for spacing */
+    border-bottom: 1px solid #eee; /* Add a border between list items */
+}
+  
+.scrollable-list li:last-child {
+    border-bottom: none; /* Remove the border from the last list item */
+}
+
 #start-screen {
     display: block; /* Initially hidden */
     position: absolute;
@@ -98,6 +119,7 @@ body {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    margin-top: 15px;
     cursor: pointer;
 }
   
