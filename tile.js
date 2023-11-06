@@ -35,7 +35,7 @@ export function dropTiles(game) {
             newLocation.innerHTML = oldLocation.innerHTML;
             oldLocation.innerHTML = '';
         }
-        else {
+        else {  //NOTE: nested if-clause 4-lines above may make this deletable
             oldLocation.classList.remove('falling');
         }
     }

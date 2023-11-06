@@ -5,6 +5,7 @@ let isMousePressed = false;
 let isTouchPressed = false;
 let lastTilePressed = null;
 let tilesTraced = [];
+let lastClickTime = 0;
 
 function handleMouseMove(event) {
     if (isMousePressed) {
@@ -51,7 +52,7 @@ export default function setupInputHandler(game) {
         lastTilePressed = null;
         checkWordValidity(game);
     });
-    game.grid.addEventListener('mouseleave', () => {
+    game.grid.addEventListener('mouseleave', () => {  //NOTE: erase maybe?
         isMousePressed = false;
         lastTilePressed = null;
         checkWordValidity(game);
@@ -67,6 +68,12 @@ export default function setupInputHandler(game) {
         checkWordValidity(game);
     });
     game.grid.addEventListener('touchmove', handleTouchMove);
+    game.grid.addEventListener('click', () => {
+        const currentTime = new Date().getTime();
+        const timeDifference = currentTime - lastClickTime;
+        if (timeDifference < 250) game.paused = true;
+        lastClickTime = currentTime;
+    });
 }
 
 /**

@@ -25,6 +25,8 @@ export class Game {
         this.numRows = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
         this.numColumns = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
         this.score = 0;
+        this.paused = false;
+        this.gameOver = false;
         this.newTileTimer = 0;
         this.newTileInterval = 997;
         this.dropTileTimer = 0;
@@ -36,16 +38,18 @@ export class Game {
      * @param {number} deltaTime 
      */
     update(deltaTime) {
-        this.newTileTimer += deltaTime;
-        this.dropTileTimer += deltaTime;
-        if (this.dropTileTimer > this.dropTileInterval) {
-            dropTiles(this);
-            this.dropTileTimer = 0;
+        if (!this.paused) {
+            this.newTileTimer += deltaTime;
+            this.dropTileTimer += deltaTime;
+            if (this.dropTileTimer > this.dropTileInterval) {
+                dropTiles(this);
+                this.dropTileTimer = 0;
+            }
+            else if (this.newTileTimer > this.newTileInterval) {
+                addNewTile(this);
+                this.newTileTimer = 0;
+            }
         }
-        else if (this.newTileTimer > this.newTileInterval) {
-            addNewTile(this);
-            this.newTileTimer = 0;
-        } 
     }
     /**
      * Increase the score based on the length of the word formed
