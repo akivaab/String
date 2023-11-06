@@ -25,6 +25,7 @@ export class Game {
         this.numRows = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
         this.numColumns = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
         this.score = 0;
+        this.onStart = true;
         this.paused = false;
         this.gameOver = false;
         this.newTileTimer = 0;
@@ -38,7 +39,7 @@ export class Game {
      * @param {number} deltaTime 
      */
     update(deltaTime) {
-        if (!this.paused) {
+        if (!this.onStart && !this.paused) {
             this.newTileTimer += deltaTime;
             this.dropTileTimer += deltaTime;
             if (this.dropTileTimer > this.dropTileInterval) {

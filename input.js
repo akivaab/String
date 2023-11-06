@@ -68,11 +68,23 @@ export default function setupInputHandler(game) {
         checkWordValidity(game);
     });
     game.grid.addEventListener('touchmove', handleTouchMove);
+
+    document.getElementById('start-button').addEventListener('click', () => {
+        game.onStart = false;
+        document.getElementById('start-screen').style.display = 'none';
+    });
     game.grid.addEventListener('click', () => {
         const currentTime = new Date().getTime();
         const timeDifference = currentTime - lastClickTime;
-        if (timeDifference < 250) game.paused = true;
+        if (timeDifference < 250) {
+            game.paused = true;
+            document.getElementById('pause-screen').style.display = 'block';
+        }
         lastClickTime = currentTime;
+    });
+    document.getElementById('resume-button').addEventListener('click', () => {
+        game.paused = false;
+        document.getElementById('pause-screen').style.display = 'none';
     });
 }
 

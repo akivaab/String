@@ -34,7 +34,7 @@ body {
     align-items: center;
     background-color: #F8E4C1;
     color: #333333;
-    font-size: xx-large;
+    font-size: 2em;
     font-weight: bolder;
     border-radius: 10%;
 }
@@ -50,3 +50,54 @@ body {
 .tile.incorrect {
     background-color: #FF0000;
 }
+
+/** Start, Pause, Over screens */
+.screen-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF; /* Background color for the pause screen content */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#start-screen {
+    display: block; /* Initially hidden */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover the entire viewport */
+    height: 100%; /* Cover the entire viewport */
+    background-color: #00FF00; /* Semi-transparent background */
+}
+  
+#start-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pause-screen {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover the entire viewport */
+    height: 100%; /* Cover the entire viewport */
+    background-color: #3498DB;
+}
+  
+#resume-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
