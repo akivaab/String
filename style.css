@@ -54,19 +54,43 @@ body {
 /** Start, Pause, Over screens */
 .screen-content {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #FFF; /* Background color for the pause screen content */
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     text-align: center;
+    width: 60vw;
+    height: 75vh;
+}
+
+.screen-content h1 {
+    font-family: 'Sacramento', cursive;
+    font-size: 5em;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.screen-content p {
+    font-family: 'Playpen Sans', cursive;
+    font-size: 1em;
+}
+
+.screen-content button {
+    font-family: 'Playpen Sans', cursive;
+    font-size: 1em;
 }
 
 .scrollable-list {
     max-height: 300px; /* Set a maximum height for the list to make it scrollable */
     overflow-y: scroll; /* Enable vertical scrolling if the content overflows */
     /*border: 1px solid #ccc;  Add a border for the scrollable list */
+    width: 40vw;
 }
   
 .scrollable-list ul {
@@ -78,6 +102,7 @@ body {
 .scrollable-list li {
     padding: 10px; /* Add some padding to list items for spacing */
     border-bottom: 1px solid #eee; /* Add a border between list items */
+    font-family: 'Playpen Sans', cursive;
 }
   
 .scrollable-list li:last-child {
@@ -85,21 +110,22 @@ body {
 }
 
 #start-screen {
-    display: block; /* Initially hidden */
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%; /* Cover the entire viewport */
     height: 100%; /* Cover the entire viewport */
-    background-color: #00FF00; /* Semi-transparent background */
+    background-color: #87A96B; /* Semi-transparent background */
 }
   
 #start-button {
-    background-color: #4CAF50;
+    background-color: #000000;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    margin-top: 10px;
     cursor: pointer;
 }
 
@@ -110,11 +136,11 @@ body {
     left: 0;
     width: 100%; /* Cover the entire viewport */
     height: 100%; /* Cover the entire viewport */
-    background-color: #3498DB;
+    background-color: #B0E0E6;
 }
   
 #resume-button {
-    background-color: #4CAF50;
+    background-color: #000000;
     color: white;
     padding: 10px 20px;
     border: none;
