@@ -5,7 +5,7 @@ let isMousePressed = false;
 let isTouchPressed = false;
 let lastTilePressed = null;
 let tilesTraced = [];
-const listContainer = document.getElementById('list-container');
+const listContainer = document.getElementById('pause-screen').querySelector('.list-container');
 const scrollableList = document.querySelector('.scrollable-list');
 let lastClickTime = 0;
 
@@ -87,6 +87,16 @@ export default function setupInputHandler(game) {
     document.getElementById('resume-button').addEventListener('click', () => {
         game.paused = false;
         document.getElementById('pause-screen').style.display = 'none';
+    });
+    document.getElementById('play-again-button').addEventListener('click', () => {
+        game.cells.forEach(cell => {
+            cell.classList = 'cell empty';
+            cell.innerHTML = '';
+        });
+        game.gameOver = false;
+        document.getElementById('game-over-screen').style.display = 'none';
+        game.score = 0;
+        game.scoreboard.innerHTML = game.score;
     });
 }
 

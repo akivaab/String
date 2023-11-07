@@ -151,4 +151,23 @@ body {
     margin-top: 15px;
     cursor: pointer;
 }
+
+#game-over-screen {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover the entire viewport */
+    height: 100%; /* Cover the entire viewport */
+    background-color: #C25A7C;
+}
   
+#play-again-button {
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}

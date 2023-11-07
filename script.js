@@ -48,7 +48,7 @@ export class Game {
      * @param {number} deltaTime 
      */
     update(deltaTime) {
-        if (!this.onStart && !this.paused) {
+        if (!this.onStart && !this.paused && !this.gameOver) {
             this.newTileTimer += deltaTime;
             this.dropTileTimer += deltaTime;
             if (this.dropTileTimer > this.dropTileInterval) {
@@ -58,6 +58,12 @@ export class Game {
             else if (this.newTileTimer > this.newTileInterval) {
                 addNewTile(this);
                 this.newTileTimer = 0;
+            }
+
+            if (this.cells.length === this.cells.filter(cell => cell.classList.contains('tile')).length) { //if all cells are tiles
+                this.gameOver = true;
+                document.getElementById('game-over-screen').style.display = 'block';
+                document.getElementById('final-score').innerHTML = this.score;
             }
         }
     }
