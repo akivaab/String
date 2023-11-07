@@ -101,43 +101,35 @@ function checkWordValidity(game) {
     // only words 3+ letters long
     if (wordTraced.length >= 3) {
         wordTraced = wordTraced.toLowerCase();
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordTraced}`)
-            .then(response => {
-                if (response.ok) return response.json();
-                else throw new Error('Not a word.');
-            })
-            .then(data => {
-                if (data[0].meanings) {
-                    tilesTraced.forEach(tile => {
-                        tile.classList.remove('touched');
-                        tile.classList.add('correct');
-                        setTimeout(function() {
-                            tile.classList.remove('correct');
-                            tile.classList.remove('tile');
-                            tile.classList.add('empty');
-                            tile.innerHTML = '';
-                        }, 80);
-                        markAboveAsFalling(game, tile);
-                    });
-                    scrollableList.style.border = '1px solid #ccc';
-                    const newWord = document.createElement('li');
-                    newWord.innerHTML = wordTraced;
-                    listContainer.appendChild(newWord);
-                    game.increaseScore(wordTraced.length);
-                    tilesTraced = [];
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                tilesTraced.forEach(tile => {
-                    tile.classList.remove('touched');
-                    tile.classList.add('incorrect');
-                    setTimeout(function() {
-                        tile.classList.remove('incorrect');  
-                    }, 80);
-                });
-                tilesTraced = [];
+        if (game.wordList.includes(wordTraced)) {
+            tilesTraced.forEach(tile => {
+                tile.classList.remove('touched');
+                tile.classList.add('correct');
+                setTimeout(function() {
+                    tile.classList.remove('correct');
+                    tile.classList.remove('tile');
+                    tile.classList.add('empty');
+                    tile.innerHTML = '';
+                }, 80);
+                markAboveAsFalling(game, tile);
             });
+            scrollableList.style.border = '1px solid #ccc';
+            const newWord = document.createElement('li');
+            newWord.innerHTML = wordTraced;
+            listContainer.appendChild(newWord);
+            game.increaseScore(wordTraced.length);
+            tilesTraced = [];
+        }
+        else {
+            tilesTraced.forEach(tile => {
+                tile.classList.remove('touched');
+                tile.classList.add('incorrect');
+                setTimeout(function() {
+                    tile.classList.remove('incorrect');  
+                }, 80);
+            });
+            tilesTraced = [];
+        }
     }
     else {
         tilesTraced.forEach(tile => {

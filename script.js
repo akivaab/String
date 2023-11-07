@@ -24,15 +24,22 @@ export class Game {
         const gridComputedStyle = window.getComputedStyle(this.grid);
         this.numRows = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
         this.numColumns = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
+        
+        this.wordList = [];
+        this.fetchWordLists();
+
         this.score = 0;
         this.scoreboard = document.getElementById('score');
+        
         this.onStart = true;
         this.paused = false;
         this.gameOver = false;
+        
         this.newTileTimer = 0;
         this.newTileInterval = 997;
         this.dropTileTimer = 0;
         this.dropTileInterval = 293;
+        
         setupInputHandler(this);
         this.scoreboard.innerHTML = this.score;
     }
@@ -61,5 +68,31 @@ export class Game {
     increaseScore(wordLength) {
         this.score += wordLength ** 2 - wordLength;
         this.scoreboard.innerHTML = this.score;
+    }
+    async fetchWordLists() {
+        const [wordList1, wordList2] = await Promise.all([
+            fetch('crosswd.txt')
+                .then(response1 => {
+                    if (response1.ok) return response1.text();
+                    else throw new Error('Error fetching first file.');
+                })
+                .then(file1Contents => file1Contents.split('\r\n'))
+                .catch(error1 => {
+                    console.error(error1);
+                    return [];
+
+                }),
+            fetch('crswd-d.txt')
+                .then(response2 => {
+                    if (response2.ok) return response2.text();
+                    else throw new Error('Error fetching second file.');
+                })
+                .then(file2Contents => file2Contents.split('\r\n'))
+                .catch(error2 => {
+                    console.error(error2);
+                    return [];
+                })
+        ]);
+        this.wordList = wordList1.concat(wordList2);
     }
 }
