@@ -5,8 +5,7 @@ let isMousePressed = false;
 let isTouchPressed = false;
 let lastTilePressed = null;
 let tilesTraced = [];
-const listContainer = document.getElementById('pause-screen').querySelector('.list-container');
-const scrollableList = document.querySelector('.scrollable-list');
+const scrollableLists = document.querySelectorAll('.scrollable-list');
 let lastClickTime = 0;
 
 function handleMouseMove(event) {
@@ -97,6 +96,14 @@ export default function setupInputHandler(game) {
         document.getElementById('game-over-screen').style.display = 'none';
         game.score = 0;
         game.scoreboard.innerHTML = game.score;
+        const scrollableLists = document.querySelectorAll('.scrollable-list');
+        scrollableLists.forEach(scrollableList => {
+            scrollableList.style.border = '0';
+            const listContainer = scrollableList.querySelector('.list-container');
+            while (listContainer.firstChild) {
+                listContainer.removeChild(listContainer.firstChild);
+            }
+        });
     });
 }
 
@@ -123,10 +130,13 @@ function checkWordValidity(game) {
                 }, 80);
                 markAboveAsFalling(game, tile);
             });
-            scrollableList.style.border = '1px solid #ccc';
-            const newWord = document.createElement('li');
-            newWord.innerHTML = wordTraced;
-            listContainer.appendChild(newWord);
+            scrollableLists.forEach(scrollableList => {
+                scrollableList.style.border = '1px solid #ccc';
+                const listContainer = scrollableList.querySelector('.list-container');
+                const newWord = document.createElement('li');
+                newWord.innerHTML = wordTraced;
+                listContainer.appendChild(newWord);
+            });
             game.increaseScore(wordTraced.length);
             tilesTraced = [];
         }
