@@ -60,7 +60,15 @@ export class Game {
                 this.newTileTimer = 0;
             }
 
-            if (this.cells.length === this.cells.filter(cell => cell.classList.contains('tile')).length) { //if all cells are tiles
+            if (this.cells.slice(0, 5).some(cell => cell.classList.contains('tile') && !cell.classList.contains('falling'))) {
+                document.body.style.backgroundColor = '#E0425A';
+            }
+            else {
+                document.body.style.backgroundColor = '#EDEDED';
+            }
+
+            //game over if all cells are tiles
+            if (this.cells.length === this.cells.filter(cell => cell.classList.contains('tile')).length) {
                 this.gameOver = true;
                 document.getElementById('game-over-screen').style.display = 'block';
                 document.getElementById('final-score').innerHTML = this.score;
@@ -74,6 +82,27 @@ export class Game {
     increaseScore(wordLength) {
         this.score += wordLength * (wordLength - 2);
         this.scoreboard.innerHTML = this.score;
+    }
+    /**
+     * Reset the game
+     */
+    reset() {
+        this.cells.forEach(cell => {
+            cell.classList = 'cell empty';
+            cell.innerHTML = '';
+        });
+        this.gameOver = false;
+        document.getElementById('game-over-screen').style.display = 'none';
+        this.score = 0;
+        this.scoreboard.innerHTML = this.score;
+        const scrollableLists = document.querySelectorAll('.scrollable-list');
+        scrollableLists.forEach(scrollableList => {
+            scrollableList.style.display = 'none';
+            const listContainer = scrollableList.querySelector('.list-container');
+            while (listContainer.firstChild) {
+                listContainer.removeChild(listContainer.firstChild);
+            }
+        });
     }
     async fetchWordLists() {
         const [wordList1, wordList2] = await Promise.all([

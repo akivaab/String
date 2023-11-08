@@ -7,6 +7,7 @@ body {
     min-height: 100vh;
     overflow: hidden; /* Hide vertical scrollbar */
     background-color: #EDEDED;
+    transition: background-color 0.7s;
 }
   
 #grid {
@@ -65,8 +66,8 @@ body {
     padding: 30px;
     border-radius: 10px;
     text-align: center;
-    width: 60vw;
-    height: 75vh;
+    width: 65vw;
+    height: 80vh;
 }
 
 .screen-content h1 {
@@ -78,7 +79,7 @@ body {
 
 .screen-content p {
     font-family: 'Playpen Sans', cursive;
-    font-size: 2.25vh;
+    font-size: 2.2vh;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -124,6 +125,11 @@ body {
     height: 100%; /* Cover the entire viewport */
     background-color: #87A96B; /* Semi-transparent background */
 }
+
+#instructions {
+    max-height: 60vh; /* Set a maximum height for the list to make it scrollable */
+    overflow-y: scroll; /* Enable vertical scrolling if the content overflows */
+}
   
 #start-button {
     background-color: #000000;
@@ -131,7 +137,7 @@ body {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 20px;
     cursor: pointer;
 }
 

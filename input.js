@@ -89,22 +89,7 @@ export default function setupInputHandler(game) {
         document.getElementById('pause-screen').style.display = 'none';
     });
     document.getElementById('play-again-button').addEventListener('click', () => {
-        game.cells.forEach(cell => {
-            cell.classList = 'cell empty';
-            cell.innerHTML = '';
-        });
-        game.gameOver = false;
-        document.getElementById('game-over-screen').style.display = 'none';
-        game.score = 0;
-        game.scoreboard.innerHTML = game.score;
-        const scrollableLists = document.querySelectorAll('.scrollable-list');
-        scrollableLists.forEach(scrollableList => {
-            scrollableList.style.display = 'none';
-            const listContainer = scrollableList.querySelector('.list-container');
-            while (listContainer.firstChild) {
-                listContainer.removeChild(listContainer.firstChild);
-            }
-        });
+        game.reset();
     });
 }
 
