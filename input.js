@@ -5,6 +5,7 @@ let isMousePressed = false;
 let isTouchPressed = false;
 let lastTilePressed = null;
 let tilesTraced = [];
+const correctnessFlashTime = 79;
 const scrollableLists = document.querySelectorAll('.scrollable-list');
 let lastClickTime = 0;
 
@@ -98,7 +99,7 @@ export default function setupInputHandler(game) {
         game.scoreboard.innerHTML = game.score;
         const scrollableLists = document.querySelectorAll('.scrollable-list');
         scrollableLists.forEach(scrollableList => {
-            scrollableList.style.border = '0';
+            scrollableList.style.display = 'none';
             const listContainer = scrollableList.querySelector('.list-container');
             while (listContainer.firstChild) {
                 listContainer.removeChild(listContainer.firstChild);
@@ -127,11 +128,11 @@ function checkWordValidity(game) {
                     tile.classList.remove('tile');
                     tile.classList.add('empty');
                     tile.innerHTML = '';
-                }, 80);
+                }, correctnessFlashTime);
                 markAboveAsFalling(game, tile);
             });
             scrollableLists.forEach(scrollableList => {
-                scrollableList.style.border = '1px solid #ccc';
+                scrollableList.style.display = 'block';
                 const listContainer = scrollableList.querySelector('.list-container');
                 const newWord = document.createElement('li');
                 newWord.innerHTML = wordTraced;

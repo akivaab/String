@@ -89,10 +89,13 @@ body {
 }
 
 .scrollable-list {
+    display: none;
     max-height: 40vh; /* Set a maximum height for the list to make it scrollable */
     overflow-y: scroll; /* Enable vertical scrolling if the content overflows */
-    /*border: 1px solid #ccc;  Add a border for the scrollable list */
+    border: 1px solid #ccc; /* Add a border for the scrollable list */
     width: 40vw;
+    font-size: 2vh;
+    font-family: 'Playpen Sans', cursive;
 }
   
 .scrollable-list ul {

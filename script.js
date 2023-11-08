@@ -36,9 +36,9 @@ export class Game {
         this.gameOver = false;
         
         this.newTileTimer = 0;
-        this.newTileInterval = 997;
+        this.newTileInterval = 1361;
         this.dropTileTimer = 0;
-        this.dropTileInterval = 293;
+        this.dropTileInterval = 337;
         
         setupInputHandler(this);
         this.scoreboard.innerHTML = this.score;
@@ -72,7 +72,7 @@ export class Game {
      * @param {number} wordLength 
      */
     increaseScore(wordLength) {
-        this.score += wordLength ** 2 - wordLength;
+        this.score += wordLength * (wordLength - 2);
         this.scoreboard.innerHTML = this.score;
     }
     async fetchWordLists() {
