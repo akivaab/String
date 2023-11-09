@@ -17,7 +17,6 @@ body {
     max-height: 100vh; /* Set the maximum height to fit the viewport */
     width: calc(100vh / 10 * 5); /* Calculate the width based on 10 rows and 5 columns, maintaining 1:1 aspect ratio */
     border: 1px solid #000;
-    viewport-fit: cover;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
