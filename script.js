@@ -111,23 +111,22 @@ export class Game {
                     if (response1.ok) return response1.text();
                     else throw new Error('Error fetching first file.');
                 })
-                .then(file1Contents => file1Contents.split('\r\n'))
+                .then(file1Contents => file1Contents.split('\n').map(word => word.trim()))
                 .catch(error1 => {
                     console.error(error1);
                     return [];
-
                 }),
             fetch('crswd-d.txt')
                 .then(response2 => {
                     if (response2.ok) return response2.text();
                     else throw new Error('Error fetching second file.');
                 })
-                .then(file2Contents => file2Contents.split('\r\n'))
+                .then(file2Contents => file2Contents.split('\n').map(word => word.trim()))
                 .catch(error2 => {
                     console.error(error2);
                     return [];
                 })
         ]);
-        this.wordList = wordList1.concat(wordList2);
+        this.wordList = [...wordList1, ...wordList2];
     }
 }
