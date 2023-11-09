@@ -104,6 +104,9 @@ function checkWordValidity(game) {
     // only words 3+ letters long
     if (wordTraced.length >= 3) {
         wordTraced = wordTraced.toLowerCase();
+
+        console.log(game.wordList);
+        
         if (game.wordList.includes(wordTraced)) {
             tilesTraced.forEach(tile => {
                 tile.classList.remove('touched');
