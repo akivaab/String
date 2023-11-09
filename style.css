@@ -17,7 +17,16 @@ body {
     max-height: 100vh; /* Set the maximum height to fit the viewport */
     width: calc(100vh / 10 * 5); /* Calculate the width based on 10 rows and 5 columns, maintaining 1:1 aspect ratio */
     border: 1px solid #000;
-    /*padding-right: 30px;*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#grid:hover {
+    cursor: default;
 }
   
 .cell {
@@ -79,7 +88,7 @@ body {
 
 .screen-content p {
     font-family: 'Playpen Sans', cursive;
-    font-size: 2.2vh;
+    font-size: 2.1vmax;
     margin-top: 4px;
     margin-bottom: 4px;
 }
