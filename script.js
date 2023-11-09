@@ -3,6 +3,11 @@ import setupInputHandler from "./input.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
+    
+    const browserBottomHeight = window.innerHeight - document.documentElement.clientHeight;
+    const percentageToSubtract = (browserBottomHeight / window.innerHeight) * 100;
+    game.grid.style.maxHeight = `calc(100vh - ${percentageToSubtract}%)`;
+
 
     let lastTime = 0;
     function gameLoop(timeStamp) {
