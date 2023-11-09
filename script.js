@@ -1,5 +1,6 @@
 import { addNewTile, dropTiles } from "./tile.js";
-import setupInputHandler from "./input.js";
+import { setupInputHandler } from "./input.js";
+import { exitFullScreen } from "./utils.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
@@ -69,6 +70,7 @@ export class Game {
 
             //game over if all cells are tiles
             if (this.cells.length === this.cells.filter(cell => cell.classList.contains('tile')).length) {
+                exitFullScreen();
                 this.gameOver = true;
                 document.getElementById('game-over-screen').style.display = 'block';
                 document.getElementById('final-score').innerHTML = this.score;

@@ -28,11 +28,42 @@ const frequencies = [
  *
  * @return {string} random letter from a - z.
  */
-export default function randomAtoZ() {
+export function randomAtoZ() {
   let random = Math.random() * 100000;
   for (let i = 0, length = letters.length; i < length; i++) {
     if (random < frequencies[i]) {
       return letters[i];
     }
+  }
+}
+
+/**
+ * Launch the game into fullscreen.
+ * @param {HTMLElement} element 
+ */
+export function launchFullScreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+
+/**
+ * Exit the fullscreen mode.
+ */
+export function exitFullScreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
   }
 }

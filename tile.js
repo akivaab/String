@@ -1,5 +1,5 @@
 import { Game } from "./script.js";
-import randomAtoZ from "./utils.js";
+import { randomAtoZ } from "./utils.js";
 
 /**
  * Add a new tile to the top row of the grid

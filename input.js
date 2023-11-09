@@ -1,5 +1,6 @@
 import { Game } from "./script.js";
 import { isAdjacent, markAboveAsFalling } from "./tile.js";
+import { launchFullScreen, exitFullScreen } from "./utils.js";
 
 let isMousePressed = false;
 let isTouchPressed = false;
@@ -45,7 +46,7 @@ function handleTouchMove(event) {
 /**
  * @param {Game} game 
  */
-export default function setupInputHandler(game) {
+export function setupInputHandler(game) {
     game.grid.addEventListener('mousedown', () => {
         isMousePressed = true;
     });
@@ -72,23 +73,27 @@ export default function setupInputHandler(game) {
     game.grid.addEventListener('touchmove', handleTouchMove);
 
     document.getElementById('start-button').addEventListener('click', () => {
+        launchFullScreen(document.documentElement);
         game.onStart = false;
         document.getElementById('start-screen').style.display = 'none';
     });
-    game.grid.addEventListener('click', () => {
+    document.addEventListener('click', () => {
         const currentTime = new Date().getTime();
         const timeDifference = currentTime - lastClickTime;
         if (timeDifference < 250) {
+            exitFullScreen();
             game.paused = true;
             document.getElementById('pause-screen').style.display = 'block';
         }
         lastClickTime = currentTime;
     });
     document.getElementById('resume-button').addEventListener('click', () => {
+        launchFullScreen(document.documentElement);
         game.paused = false;
         document.getElementById('pause-screen').style.display = 'none';
     });
     document.getElementById('play-again-button').addEventListener('click', () => {
+        launchFullScreen(document.documentElement);
         game.reset();
     });
 }
