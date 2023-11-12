@@ -37,7 +37,7 @@ export class Game {
         this.gameOver = false;
         
         this.newTileTimer = 0;
-        this.newTileInterval = 1361;
+        this.newTileInterval = 2657;
         this.dropTileTimer = 0;
         this.dropTileInterval = 337;
         
