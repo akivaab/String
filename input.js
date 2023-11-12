@@ -24,7 +24,6 @@ function handleMouseMove(event) {
 }
 
 function handleTouchMove(event) {
-    event.preventDefault();
     if (isTouchPressed) {
         const target = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
         if (target && target.classList.contains('tile') && !target.classList.contains('falling')
@@ -63,12 +62,10 @@ export function setupInputHandler(game) {
     });
     game.grid.addEventListener('mousemove', handleMouseMove);
 
-    game.grid.addEventListener('touchstart', (event) => {
-        event.preventDefault();
+    game.grid.addEventListener('touchstart', () => {
         isTouchPressed = true;
     });
-    document.addEventListener('touchend', (event) => {
-        event.preventDefault();
+    document.addEventListener('touchend', () => {
         isTouchPressed = false;
         lastTilePressed = null;
         checkWordValidity(game);
