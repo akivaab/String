@@ -10,19 +10,32 @@ const correctnessFlashTime = 79;
 const scrollableLists = document.querySelectorAll('.scrollable-list');
 let lastClickTime = 0;
 
+/**
+ * @param {MouseEvent} event 
+ */
 function handleMouseMove(event) {
     if (isMousePressed) {
-        const target = event.target;
+        const target = document.elementFromPoint(event.clientX, event.clientY);
         if (target.classList.contains('tile') && !target.classList.contains('falling') && 
             isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target)) 
         {
-            target.classList.add('touched');
-            lastTilePressed = target;
-            tilesTraced.push(target);
+            const tileRect = target.getBoundingClientRect();
+            const centerX = tileRect.left + tileRect.width / 2;
+            const centerY = tileRect.top + tileRect.height / 2;
+            if (Math.abs(event.clientX - centerX) < tileRect.width / 3 &&
+                Math.abs(event.clientY - centerY) < tileRect.height / 3)
+            {
+                target.classList.add('touched');
+                lastTilePressed = target;
+                tilesTraced.push(target);
+            }
         }
     }
 }
 
+/**
+ * @param {TouchEvent} event 
+ */
 function handleTouchMove(event) {
     if (isTouchPressed) {
         const target = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
