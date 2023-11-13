@@ -83,8 +83,7 @@ body {
 .screen-content h1 {
     font-family: 'Sacramento', cursive;
     font-size: 11vh;
-    margin-top: 2.5vh;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .screen-content p {
@@ -97,6 +96,8 @@ body {
 .screen-content button {
     font-family: 'Playpen Sans', cursive;
     font-size: 2vh;
+    border: none;
+    cursor: pointer;
 }
 
 .scrollable-list {
@@ -137,18 +138,32 @@ body {
 }
 
 #instructions {
-    max-height: 60vh; /* Set a maximum height for the list to make it scrollable */
+    max-height: 50vh; /* Set a maximum height for the list to make it scrollable */
     overflow-y: scroll; /* Enable vertical scrolling if the content overflows */
 }
-  
+
+#difficulty-selection {
+    font-family: 'EB Garamond', serif;
+    font-size: 2.1vmax;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#difficulty-selection input {
+    margin-left: 3vw;
+}
+
+#difficulty-selection label {
+    margin-right: 3vw;
+}
+
 #start-button {
     background-color: #000000;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
     margin-top: 20px;
-    cursor: pointer;
 }
 
 #pause-screen {
@@ -165,10 +180,8 @@ body {
     background-color: #000000;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
     margin-top: 15px;
-    cursor: pointer;
 }
 
 #game-over-screen {
@@ -185,8 +198,6 @@ body {
     background-color: #000000;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
     margin-top: 15px;
-    cursor: pointer;
 }

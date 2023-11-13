@@ -89,16 +89,20 @@ export function setupInputHandler(game) {
         launchFullScreen(document.documentElement);
         game.onStart = false;
         document.getElementById('start-screen').style.display = 'none';
+        game.newTileIntervalIndex = document.querySelector('input[name="difficulty"]:checked').value;
+        game.newTileInterval = game.newTileIntervals[game.newTileIntervalIndex];
     });
     document.addEventListener('click', () => {
-        const currentTime = new Date().getTime();
-        const timeDifference = currentTime - lastClickTime;
-        if (timeDifference < 250) {
-            exitFullScreen();
-            game.paused = true;
-            document.getElementById('pause-screen').style.display = 'block';
+        if (!game.onStart && !game.paused && !game.gameOver) {
+            const currentTime = new Date().getTime();
+            const timeDifference = currentTime - lastClickTime;
+            if (timeDifference < 250) {
+                exitFullScreen();
+                game.paused = true;
+                document.getElementById('pause-screen').style.display = 'block';
+            }
+            lastClickTime = currentTime;
         }
-        lastClickTime = currentTime;
     });
     document.getElementById('resume-button').addEventListener('click', () => {
         launchFullScreen(document.documentElement);
