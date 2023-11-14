@@ -64,6 +64,8 @@ export function isAdjacent(newTile, lastTile) {
     if (newTile === lastTile) return false;
     const newTileRect = newTile.getBoundingClientRect();
     const lastTileRect = lastTile.getBoundingClientRect();
+    console.log('last tile (tblr): ', lastTileRect.top, lastTileRect.bottom, lastTileRect.left, lastTileRect.right);
+    console.log('new tile (tblr): ', newTileRect.top, newTileRect.bottom, newTileRect.left, newTileRect.right);
     const verticallyAdjacent = newTileRect.bottom === lastTileRect.top || newTileRect.top === lastTileRect.bottom;
     const horizontallyAdjacent = newTileRect.right === lastTileRect.left || newTileRect.left === lastTileRect.right;
     const diagonallyAdjacent =
