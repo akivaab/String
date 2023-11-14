@@ -37,24 +37,17 @@ function handleMouseMove(event) {
  * @param {TouchEvent} event 
  */
 function handleTouchMove(event) {
-    console.log('touch-move event fires');
     if (isTouchPressed) {
-        console.log('Touched at: ', event.touches[0].clientX, event.touches[0].clientY);
         const target = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
-        console.log('Targeted tile: ', target);
         if (target && target.classList.contains('tile') && !target.classList.contains('falling')
             && isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target))
         {
-            console.log('Tile is valid to highlight, now check if within center radius');
             const tileRect = target.getBoundingClientRect();
-            console.log('Tile rect: ', tileRect);
             const centerX = tileRect.left + tileRect.width / 2;
             const centerY = tileRect.top + tileRect.height / 2;
-            console.log('Tile center: ', centerX, centerY);
             if (Math.abs(event.touches[0].clientX - centerX) < tileRect.width / 3 &&
                 Math.abs(event.touches[0].clientY - centerY) < tileRect.height / 3)
             {
-                console.log('Tile is highlighted - COMPLETE');
                 target.classList.add('touched');
                 lastTilePressed = target;
                 tilesTraced.push(target);

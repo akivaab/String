@@ -53,14 +53,21 @@ export function markAboveAsFalling(game, tile) {
     }
 }
 
-export function isAdjacent(tile1, tile2) {
-    if (!tile2) return true;
-    if (tile1 === tile2) return false;
-    const rect1 = tile1.getBoundingClientRect();
-    const rect2 = tile2.getBoundingClientRect(); 
-    console.log('first tile: ', rect1);
-    console.log('second tile: ', rect2);  
-    console.log('left boolean: ', Math.abs(rect1.left - rect2.left) <= rect1.width);
-    console.log('top boolean: ', Math.abs(rect1.top - rect2.top) <= rect1.height);  
-    return Math.abs(rect1.left - rect2.left) <= rect1.width && Math.abs(rect1.top - rect2.top) <= rect1.height;
+/**
+ * Check if two tiles are adjacent to one another
+ * @param {HTMLElement} newTile 
+ * @param {HTMLElement} lastTile 
+ * @returns {boolean} are tiles adjacent
+ */
+export function isAdjacent(newTile, lastTile) {
+    if (!lastTile) return true;
+    if (newTile === lastTile) return false;
+    const newTileRect = newTile.getBoundingClientRect();
+    const lastTileRect = lastTile.getBoundingClientRect();
+    const verticallyAdjacent = newTileRect.bottom === lastTileRect.top || newTileRect.top === lastTileRect.bottom;
+    const horizontallyAdjacent = newTileRect.right === lastTileRect.left || newTileRect.left === lastTileRect.right;
+    const diagonallyAdjacent =
+        (newTileRect.bottom === lastTileRect.top && (newTileRect.right === lastTileRect.left || newTileRect.left === lastTileRect.right)) ||
+        (newTileRect.top === lastTileRect.bottom && (newTileRect.right === lastTileRect.left || newTileRect.left === lastTileRect.right));
+    return verticallyAdjacent || horizontallyAdjacent || diagonallyAdjacent;
 }
