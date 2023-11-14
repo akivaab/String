@@ -39,14 +39,9 @@ function handleMouseMove(event) {
 function handleTouchMove(event) {
     console.log('touch-move event fires');
     if (isTouchPressed) {
-        console.log('isTouchPressed is true');
         console.log('Touched at: ', event.touches[0].clientX, event.touches[0].clientY);
         const target = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
         console.log('Targeted tile: ', target);
-        console.log('Is this a tile? ', target.classList.contains('tile'));
-        console.log('Is this tile NOT falling? ', !target.classList.contains('falling'));
-        console.log('Is this tile adjacent to the last one? ', isAdjacent(target, lastTilePressed));
-        console.log('Has this tile not yet been traced? ', !tilesTraced.includes(target));
         if (target && target.classList.contains('tile') && !target.classList.contains('falling')
             && isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target))
         {
