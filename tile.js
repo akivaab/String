@@ -53,6 +53,7 @@ export function markAboveAsFalling(game, tile) {
     }
 }
 
+const pixelRatio = window.devicePixelRatio || 1;
 /**
  * Check if two tiles are adjacent to one another
  * @param {HTMLElement} newTile 
@@ -66,10 +67,18 @@ export function isAdjacent(newTile, lastTile) {
     const lastTileRect = lastTile.getBoundingClientRect();
     console.log('last tile (tblr): ', lastTileRect.top, lastTileRect.bottom, lastTileRect.left, lastTileRect.right);
     console.log('new tile (tblr): ', newTileRect.top, newTileRect.bottom, newTileRect.left, newTileRect.right);
-    const verticallyAdjacent = newTileRect.bottom === lastTileRect.top || newTileRect.top === lastTileRect.bottom;
-    const horizontallyAdjacent = newTileRect.right === lastTileRect.left || newTileRect.left === lastTileRect.right;
+    const verticallyAdjacent = 
+        Math.abs(newTileRect.bottom - lastTileRect.top) <= pixelRatio || 
+        Math.abs(newTileRect.top - lastTileRect.bottom) <= pixelRatio;
+    const horizontallyAdjacent = 
+        Math.abs(newTileRect.right - lastTileRect.left) <= pixelRatio ||
+        Math.abs(newTileRect.left - lastTileRect.right) <= pixelRatio;
     const diagonallyAdjacent =
-        (newTileRect.bottom === lastTileRect.top && (newTileRect.right === lastTileRect.left || newTileRect.left === lastTileRect.right)) ||
-        (newTileRect.top === lastTileRect.bottom && (newTileRect.right === lastTileRect.left || newTileRect.left === lastTileRect.right));
+        (Math.abs(newTileRect.bottom - lastTileRect.top) <= pixelRatio && 
+        (Math.abs(newTileRect.right - lastTileRect.left) <= pixelRatio || 
+        Math.abs(newTileRect.left - lastTileRect.right) <= pixelRatio)) ||
+        (Math.abs(newTileRect.top - lastTileRect.bottom) <= pixelRatio && 
+        (Math.abs(newTileRect.right - lastTileRect.left) <= pixelRatio || 
+        Math.abs(newTileRect.left - lastTileRect.right) <= pixelRatio));
     return verticallyAdjacent || horizontallyAdjacent || diagonallyAdjacent;
 }
