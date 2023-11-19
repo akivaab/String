@@ -1,4 +1,4 @@
-Original dictionary API use
+Original dictionary API use:
 
 function checkWordValidity(game) {
     let wordTraced = "";
@@ -52,3 +52,51 @@ function checkWordValidity(game) {
         tilesTraced = [];
     }
 }
+
+
+Second dictionary attempt:
+
+document.querySelectorAll('.list-container').forEach((list) => {
+        list.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                const newTab = window.open("https://playscrabble.com/dictionary", "_blank");
+                console.log('before new frame');
+                newTab.onload = () => {
+                    console.log('onload');
+                    // Check if the document in the new tab contains iframes
+                    if (newTab.document.body.querySelector('iframe')) {
+                        console.log('iframe');
+                        // If iframes are present, you may need to switch to the iframe
+                        const iframe = newTab.document.body.querySelector('iframe');
+                        const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                        
+                        const inputField = iframeDocument.querySelector(".DictionaryInputstyle__StyledInput-sc-11ep6dx-0.bbWmVX.dictionary-input");
+                        const searchButton = iframeDocument.querySelector(".Buttonstyle__StyledButton-sc-7rtt3j-0.hdA-dKy");
+    
+                        // Set the value of the input field to the word
+                        inputField.value = e.target.innerHTML;
+                        // Simulate a click on the search button
+                        searchButton.click();
+                    } else {
+                        console.log('no iframe');
+                        // Access the input field and button in the Scrabble dictionary website
+                        const inputField = newTab.document.querySelector(".DictionaryInputstyle__StyledInput-sc-11ep6dx-0.bbWmVX.dictionary-input");
+                        const searchButton = newTab.document.querySelector(".Buttonstyle__StyledButton-sc-7rtt3j-0.hdA-dKy");
+    
+                        // Set the value of the input field to the word
+                        inputField.value = e.target.innerHTML;
+                        // Simulate a click on the search button
+                        searchButton.click();
+                    }
+                    console.log('skip iframe');
+                    // Access the div containing the definition
+                    const definitionDiv = newTab.document.querySelector(".Flexstyle__StyledFlex-sc-1neqeo8-0.bGnbkf");
+                    // Scroll down to the definition
+                    window.scrollTo({
+                        top: definitionDiv.offsetTop,
+                        behavior: 'smooth' // You can use 'auto' instead of 'smooth' for instant scrolling
+                    });
+                };
+            }
+        });
+    });
