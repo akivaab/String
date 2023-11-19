@@ -65,7 +65,7 @@ export class Game {
                 this.newTileTimer = 0;
             }
 
-            if (this.cells.slice(0, 5).some(cell => cell.classList.contains('tile') && !cell.classList.contains('falling'))) {
+            if (this.cells.filter(cell => cell.classList.contains('empty')).length < 10) {
                 document.body.style.backgroundColor = '#E0425A';
             }
             else {
