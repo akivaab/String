@@ -39,7 +39,7 @@ export class Game {
         this.newTileTimer = 0;
         // 1327, 2003, 2657 are the key intervals
         this.newTileIntervals = [1031, 1103, 1217, 1327, 1433, 1559, 1669, 1789, 1901, 2003, 2111, 2207, 2311, 2437, 2557, 2657];
-        this.newTileIntervalIndex = document.querySelector('input[name="difficulty"]:checked').value;
+        this.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
         this.newTileInterval = this.newTileIntervals[this.newTileIntervalIndex];
         this.dropTileTimer = 0;
         this.dropTileInterval = 337;
@@ -105,7 +105,7 @@ export class Game {
             cell.innerHTML = '';
         });
         this.gameOver = false;
-        this.newTileIntervalIndex = document.querySelector('input[name="difficulty"]:checked').value;
+        this.newTileIntervalIndex = document.querySelector('input[name="difficulty2"]:checked').value;
         this.newTileInterval = this.newTileIntervals[this.newTileIntervalIndex];
         document.getElementById('game-over-screen').style.display = 'none';
         this.score = 0;

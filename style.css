@@ -127,6 +127,22 @@ body {
     border-bottom: none; /* Remove the border from the last list item */
 }
 
+.difficulty-selection {
+    font-family: 'EB Garamond', serif;
+    font-size: 2.1vmax;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.difficulty-selection input {
+    margin-left: 3vw;
+}
+
+.difficulty-selection label {
+    margin-right: 3vw;
+}
+
 #start-screen {
     display: block;
     position: absolute;
@@ -140,22 +156,6 @@ body {
 #instructions {
     max-height: 50vh; /* Set a maximum height for the list to make it scrollable */
     overflow-y: scroll; /* Enable vertical scrolling if the content overflows */
-}
-
-#difficulty-selection {
-    font-family: 'EB Garamond', serif;
-    font-size: 2.1vmax;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
-#difficulty-selection input {
-    margin-left: 3vw;
-}
-
-#difficulty-selection label {
-    margin-right: 3vw;
 }
 
 #start-button {

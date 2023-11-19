@@ -89,8 +89,15 @@ export function setupInputHandler(game) {
         launchFullScreen(document.documentElement);
         game.onStart = false;
         document.getElementById('start-screen').style.display = 'none';
-        game.newTileIntervalIndex = document.querySelector('input[name="difficulty"]:checked').value;
+        game.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
         game.newTileInterval = game.newTileIntervals[game.newTileIntervalIndex];
+        
+        //set game over screen difficulty selection to match start screen
+        const difficultyOptions = document.querySelectorAll('input[name="difficulty2"]');
+        difficultyOptions.forEach((difficultyOption) => {
+            if (difficultyOption.value === game.newTileIntervalIndex) difficultyOption.checked = true;
+            else difficultyOption.checked = false;
+        });
     });
     document.addEventListener('click', () => {
         if (!game.onStart && !game.paused && !game.gameOver) {
