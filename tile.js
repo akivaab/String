@@ -54,6 +54,7 @@ export function markAboveAsFalling(game, tile) {
 }
 
 const pixelRatio = window.devicePixelRatio || 1;
+console.log(pixelRatio);
 /**
  * Check if two tiles are adjacent to one another
  * @param {HTMLElement} newTile 
@@ -61,12 +62,14 @@ const pixelRatio = window.devicePixelRatio || 1;
  * @returns {boolean} are tiles adjacent
  */
 export function isAdjacent(newTile, lastTile) {
+    console.log('last tile: ', lastTile);
+    console.log('new tile: ', newTile);
     if (!lastTile) return true;
     if (newTile === lastTile) return false;
     const newTileRect = newTile.getBoundingClientRect();
     const lastTileRect = lastTile.getBoundingClientRect();
-    console.log('last tile (tblr): ', lastTileRect.top, lastTileRect.bottom, lastTileRect.left, lastTileRect.right);
-    console.log('new tile (tblr): ', newTileRect.top, newTileRect.bottom, newTileRect.left, newTileRect.right);
+    console.log('last tile - top: ', lastTileRect.top, ' bottom: ', lastTileRect.bottom, ' left: ', lastTileRect.left, ' right: ', lastTileRect.right);
+    console.log('new tile - top: ', newTileRect.top, ' bottom: ', newTileRect.bottom, ' left: ', newTileRect.left, ' right: ', newTileRect.right);
     const verticallyAdjacent = 
         Math.abs(newTileRect.bottom - lastTileRect.top) <= pixelRatio || 
         Math.abs(newTileRect.top - lastTileRect.bottom) <= pixelRatio;

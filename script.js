@@ -105,6 +105,8 @@ export class Game {
             cell.innerHTML = '';
         });
         this.gameOver = false;
+        this.newTileIntervalIndex = document.querySelector('input[name="difficulty"]:checked').value;
+        this.newTileInterval = this.newTileIntervals[this.newTileIntervalIndex];
         document.getElementById('game-over-screen').style.display = 'none';
         this.score = 0;
         this.scoreboard.innerHTML = this.score;
