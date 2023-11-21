@@ -111,6 +111,11 @@ export function setupInputHandler(game) {
             lastClickTime = currentTime;
         }
     });
+    document.querySelectorAll('.list-container').forEach((list) => {
+        list.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') window.open("https://www.thefreedictionary.com/" + e.target.innerHTML, "_blank");
+        });
+    });
     document.getElementById('resume-button').addEventListener('click', () => {
         launchFullScreen(document.documentElement);
         game.paused = false;
