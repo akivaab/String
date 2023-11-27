@@ -84,6 +84,7 @@ export class Game {
             if (this.cells.length === this.cells.filter(cell => cell.classList.contains('tile')).length) {
                 exitFullScreen();
                 this.gameOver = true;
+                document.getElementById('canvas').style.display = 'none';
                 document.getElementById('game-over-screen').style.display = 'block';
                 document.getElementById('final-score').innerHTML = this.score;
             }
@@ -110,6 +111,7 @@ export class Game {
         this.newTileIntervalIndex = document.querySelector('input[name="difficulty2"]:checked').value;
         this.newTileInterval = this.newTileIntervals[this.newTileIntervalIndex];
         document.getElementById('game-over-screen').style.display = 'none';
+        document.getElementById('canvas').style.display = 'block';
         this.score = 0;
         this.scoreboard.innerHTML = this.score;
         const scrollableLists = document.querySelectorAll('.scrollable-list');

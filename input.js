@@ -94,6 +94,7 @@ export function setupInputHandler(game) {
         launchFullScreen(document.documentElement);
         game.onStart = false;
         document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('canvas').style.display = 'block';
         game.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
         game.newTileInterval = game.newTileIntervals[game.newTileIntervalIndex];
         
@@ -111,6 +112,7 @@ export function setupInputHandler(game) {
             if (timeDifference < 250) {
                 exitFullScreen();
                 game.paused = true;
+                document.getElementById('canvas').style.display = 'none';
                 document.getElementById('pause-screen').style.display = 'block';
             }
             lastClickTime = currentTime;
@@ -125,6 +127,7 @@ export function setupInputHandler(game) {
         launchFullScreen(document.documentElement);
         game.paused = false;
         document.getElementById('pause-screen').style.display = 'none';
+        document.getElementById('canvas').style.display = 'block';
     });
     document.getElementById('play-again-button').addEventListener('click', () => {
         launchFullScreen(document.documentElement);
