@@ -9,7 +9,7 @@ const letters = [
 ];
 
 /** 
- * English language cumulative letter frequencies × 100000.
+ * English language cumulative letter frequencies × 100000
  * @see http://en.wikipedia.org/wiki/Letter_frequency
  */
 const frequencies = [
@@ -23,10 +23,8 @@ const frequencies = [
 ];
 
 /**
- * Return a random letter from a - z according to their relative
- * frequencies in the English language.
- *
- * @return {string} random letter from a - z.
+ * Return a random letter from a - z according to their relative frequencies in the English language
+ * @return {string} random letter from a - z
  */
 export function randomAtoZ() {
     let random = Math.random() * 100000;
@@ -36,8 +34,7 @@ export function randomAtoZ() {
 }
 
 /**
- * Detects if the program is running on a mobile browser or not.
- * 
+ * Detects if the program is running on a mobile browser or not
  * @returns {boolean} is this a mobile device
  */
 function isMobileBrowser() {
@@ -51,7 +48,7 @@ function isMobileBrowser() {
 };
 
 /**
- * Launch the game into fullscreen.
+ * Launch the game into fullscreen
  * @param {HTMLElement} element 
  */
 export function launchFullScreen(element) {
@@ -64,7 +61,7 @@ export function launchFullScreen(element) {
 }
 
 /**
- * Exit the fullscreen mode.
+ * Exit the fullscreen mode
  */
 export function exitFullScreen() {
     if (isMobileBrowser()) {

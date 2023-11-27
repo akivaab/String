@@ -1,6 +1,8 @@
 import { Game } from "./script.js";
 import { randomAtoZ } from "./utils.js";
 
+const pixelRatio = (window.devicePixelRatio || 1) / 10000; //leeway for distance between tiles
+
 /**
  * Add a new tile to the top row of the grid
  * @param {Game} game
@@ -23,6 +25,7 @@ export function dropTiles(game) {
     for (let i = game.cells.length - 1; i >= 0; i--) {
         const oldLocation = game.cells[i];
         const newLocation = game.cells[i + game.numColumns];
+        //if this cell is a tile and is above an empty cell
         if (oldLocation.classList.contains('tile') && i + game.numColumns < game.cells.length && 
             newLocation.classList.contains('empty'))
         {
@@ -31,11 +34,12 @@ export function dropTiles(game) {
             
             newLocation.classList.remove('empty');
             newLocation.classList.add('tile');
+            //if the new location is not on the bottom row
             if (i + game.numColumns < game.cells.length - game.numColumns) newLocation.classList.add('falling');
             newLocation.innerHTML = oldLocation.innerHTML;
             oldLocation.innerHTML = '';
         }
-        else {  //NOTE: nested if-clause 4-lines above may make this deletable
+        else {
             oldLocation.classList.remove('falling');
         }
     }
@@ -44,7 +48,7 @@ export function dropTiles(game) {
 /**
  * Mark all tiles above a given tile as falling
  * @param {Game} game
- * @param tile
+ * @param {HTMLDivElement} tile
  */
 export function markAboveAsFalling(game, tile) {
     let tileIndex = game.cells.findIndex(cell => cell === tile);
@@ -53,7 +57,6 @@ export function markAboveAsFalling(game, tile) {
     }
 }
 
-const pixelRatio = (window.devicePixelRatio || 1) / 10000;
 /**
  * Check if two tiles are adjacent to one another
  * @param {HTMLElement} newTile 
@@ -61,7 +64,7 @@ const pixelRatio = (window.devicePixelRatio || 1) / 10000;
  * @returns {boolean} are tiles adjacent
  */
 export function isAdjacent(newTile, lastTile) {
-    if (!lastTile) return true;
+    if (!lastTile) return true; //if this is the first tile touched
     if (newTile === lastTile) return false;
     const newTileRect = newTile.getBoundingClientRect();
     const lastTileRect = lastTile.getBoundingClientRect();

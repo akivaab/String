@@ -65,6 +65,7 @@ export class Game {
                 this.newTileTimer = 0;
             }
 
+            //body turns red to warn player
             if (this.cells.filter(cell => cell.classList.contains('empty')).length < 10) {
                 document.body.style.backgroundColor = '#E0425A';
             }
@@ -72,7 +73,7 @@ export class Game {
                 document.body.style.backgroundColor = '#EDEDED';
             }
 
-            //increase new tile frequency
+            //increase new tile frequency when score reaches certain intervals
             if (this.score > this.scoreToChangeNewTileInterval) {
                 this.scoreToChangeNewTileInterval += 150;
                 this.newTileIntervalIndex = this.newTileIntervalIndex < 0 ? 0 : this.newTileIntervalIndex - 1;
@@ -119,6 +120,9 @@ export class Game {
             }
         });
     }
+    /**
+     * Fetch the files of possible words
+     */
     async fetchWordLists() {
         const [wordList1, wordList2] = await Promise.all([
             fetch('crosswd.txt')

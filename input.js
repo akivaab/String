@@ -6,11 +6,12 @@ let isMousePressed = false;
 let isTouchPressed = false;
 let lastTilePressed = null;
 let tilesTraced = [];
-const correctnessFlashTime = 79;
+const correctnessFlashTime = 79; //tiles flash green or red depending on vaildity of word formed
 const scrollableLists = document.querySelectorAll('.scrollable-list');
 let lastClickTime = 0;
 
 /**
+ * Handle events caused by mouse movement
  * @param {MouseEvent} event 
  */
 function handleMouseMove(event) {
@@ -34,6 +35,7 @@ function handleMouseMove(event) {
 }
 
 /**
+ * Handle events caused by touching the screen
  * @param {TouchEvent} event 
  */
 function handleTouchMove(event) {
@@ -57,9 +59,11 @@ function handleTouchMove(event) {
 }
 
 /**
- * @param {Game} game 
+ * Set up all input handlers
+ * @param {Game} game
  */
 export function setupInputHandler(game) {
+    //mouse and touch events
     game.grid.addEventListener('mousedown', () => {
         isMousePressed = true;
     });
@@ -68,7 +72,7 @@ export function setupInputHandler(game) {
         lastTilePressed = null;
         checkWordValidity(game);
     });
-    game.grid.addEventListener('mouseleave', () => {  //NOTE: erase maybe?
+    game.grid.addEventListener('mouseleave', () => {  //NOTE: deletable if you choose
         isMousePressed = false;
         lastTilePressed = null;
         checkWordValidity(game);
@@ -85,6 +89,7 @@ export function setupInputHandler(game) {
     });
     game.grid.addEventListener('touchmove', handleTouchMove);
 
+    //UI-related events
     document.getElementById('start-button').addEventListener('click', () => {
         launchFullScreen(document.documentElement);
         game.onStart = false;
@@ -128,7 +133,7 @@ export function setupInputHandler(game) {
 }
 
 /**
- * 
+ * Check if the word formed is a valid word
  * @param {Game} game 
  */
 function checkWordValidity(game) {
@@ -138,6 +143,7 @@ function checkWordValidity(game) {
     // only words 3+ letters long
     if (wordTraced.length >= 3) {
         wordTraced = wordTraced.toLowerCase();
+        //if word is valid
         if (game.wordList.includes(wordTraced)) {
             tilesTraced.forEach(tile => {
                 tile.classList.remove('touched');
@@ -150,6 +156,7 @@ function checkWordValidity(game) {
                 }, correctnessFlashTime);
                 markAboveAsFalling(game, tile);
             });
+            //add word to lists in pause and game over screens
             scrollableLists.forEach(scrollableList => {
                 scrollableList.style.display = 'block';
                 const listContainer = scrollableList.querySelector('.list-container');
@@ -157,9 +164,11 @@ function checkWordValidity(game) {
                 newWord.innerHTML = wordTraced;
                 listContainer.appendChild(newWord);
             });
+            //increase score
             game.increaseScore(wordTraced.length);
             tilesTraced = [];
         }
+        //if word is not valid
         else {
             tilesTraced.forEach(tile => {
                 tile.classList.remove('touched');
@@ -171,6 +180,7 @@ function checkWordValidity(game) {
             tilesTraced = [];
         }
     }
+    //word is less than 3 letters
     else {
         tilesTraced.forEach(tile => {
             tile.classList.remove('touched');
