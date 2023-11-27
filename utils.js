@@ -28,9 +28,26 @@ const frequencies = [
  */
 export function randomAtoZ() {
     let random = Math.random() * 100000;
-    for (let i = 0, length = letters.length; i < length; i++) {
+    for (let i = 0; i < letters.length; i++) {
         if (random < frequencies[i]) return letters[i];
     }
+}
+
+/**
+ * Calculate a score bonus for using rare letters based on their rarity
+ * @param {string} word
+ * @returns {number} score bonus
+ */
+export function rareLetterScoreBonus(word) {
+    let bonus = 0;
+    for (let i = 0; i < word.length; i++) {
+        let letterIndex = letters.findIndex(letter => letter === word[i].toUpperCase());
+        if (letterIndex != -1) {
+            let frequency = frequencies[letterIndex] - (letterIndex - 1 < 0 ? 0 : frequencies[letterIndex - 1]);
+            if (frequency < 1000) bonus += 0.025 / (frequency / 100000);
+        }
+    }
+    return Math.ceil(bonus);
 }
 
 /**

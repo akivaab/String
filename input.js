@@ -165,7 +165,7 @@ function checkWordValidity(game) {
                 listContainer.appendChild(newWord);
             });
             //increase score
-            game.increaseScore(wordTraced.length);
+            game.increaseScore(wordTraced);
             tilesTraced = [];
         }
         //if word is not valid

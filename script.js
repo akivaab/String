@@ -1,6 +1,6 @@
 import { addNewTile, dropTiles } from "./tile.js";
 import { setupInputHandler } from "./input.js";
-import { exitFullScreen } from "./utils.js";
+import { exitFullScreen, rareLetterScoreBonus } from "./utils.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
@@ -90,11 +90,12 @@ export class Game {
         }
     }
     /**
-     * Increase the score based on the length of the word formed
-     * @param {number} wordLength 
+     * Increase the score based on the the word formed
+     * @param {string} word
      */
-    increaseScore(wordLength) {
-        this.score += wordLength * (wordLength - 2);
+    increaseScore(word) {
+        let bonus = rareLetterScoreBonus(word);
+        this.score += word.length * (word.length - 2) + bonus;
         this.scoreboard.innerHTML = this.score;
     }
     /**
