@@ -15,37 +15,7 @@ let lastClickTime = 0;
  * @param {MouseEvent} event 
  */
 function handleMouseMove(event) {
-    if (isMousePressed) {
-        const target = document.elementFromPoint(event.clientX, event.clientY);
-        //if the tile is highlight-able, highlight it
-        if (target.classList.contains('tile') && !target.classList.contains('falling') && 
-            isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target)) 
-        {
-            const tileRect = target.getBoundingClientRect();
-            const centerX = tileRect.left + tileRect.width / 2;
-            const centerY = tileRect.top + tileRect.height / 2;
-            if (Math.abs(event.clientX - centerX) < tileRect.width / 3 &&
-                Math.abs(event.clientY - centerY) < tileRect.height / 3)
-            {
-                target.classList.add('touched');
-                lastTilePressed = target;
-                tilesTraced.push(target);
-            }
-        }
-        //if the tile is the one touched previously, undo the last tile highlight
-        else if (target === tilesTraced[tilesTraced.length - 2]) {
-            const tileRect = target.getBoundingClientRect();
-            const centerX = tileRect.left + tileRect.width / 2;
-            const centerY = tileRect.top + tileRect.height / 2;
-            if (Math.abs(event.touches[0].clientX - centerX) < tileRect.width / 3 &&
-                Math.abs(event.touches[0].clientY - centerY) < tileRect.height / 3)
-            {
-                tilesTraced[tilesTraced.length - 1].classList.remove('touched');
-                lastTilePressed = target;
-                tilesTraced.pop();
-            }
-        }
-    }
+    if (isMousePressed) handleMove(event.clientX, event.clientY);
 }
 
 /**
@@ -53,35 +23,42 @@ function handleMouseMove(event) {
  * @param {TouchEvent} event 
  */
 function handleTouchMove(event) {
-    if (isTouchPressed) {
-        const target = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
-        //if the tile is highlight-able, highlight it
-        if (target && target.classList.contains('tile') && !target.classList.contains('falling') &&
-            isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target))
+    if (isTouchPressed) handleMove(event.touches[0].clientX, event.touches[0].clientY);
+}
+
+/**
+ * General function that handles both mouse movements and touch movements
+ * @param {number} x x-coordinate of the affected element
+ * @param {number} y y-coordinate of the affected element
+ */
+function handleMove(x, y) {
+    const target = document.elementFromPoint(x, y);
+    //if the tile is highlight-able, highlight it
+    if (target && target.classList.contains('tile') && !target.classList.contains('falling') &&
+        isAdjacent(target, lastTilePressed) && !tilesTraced.includes(target))
+    {
+        const tileRect = target.getBoundingClientRect();
+        const centerX = tileRect.left + tileRect.width / 2;
+        const centerY = tileRect.top + tileRect.height / 2;
+        if (Math.abs(x - centerX) < tileRect.width / 3 &&
+            Math.abs(y - centerY) < tileRect.height / 3)
         {
-            const tileRect = target.getBoundingClientRect();
-            const centerX = tileRect.left + tileRect.width / 2;
-            const centerY = tileRect.top + tileRect.height / 2;
-            if (Math.abs(event.touches[0].clientX - centerX) < tileRect.width / 3 &&
-                Math.abs(event.touches[0].clientY - centerY) < tileRect.height / 3)
-            {
-                target.classList.add('touched');
-                lastTilePressed = target;
-                tilesTraced.push(target);
-            }
+            target.classList.add('touched');
+            lastTilePressed = target;
+            tilesTraced.push(target);
         }
-        //if the tile is the one touched previously, undo the last tile highlight
-        else if (target === tilesTraced[tilesTraced.length - 2]) {
-            const tileRect = target.getBoundingClientRect();
-            const centerX = tileRect.left + tileRect.width / 2;
-            const centerY = tileRect.top + tileRect.height / 2;
-            if (Math.abs(event.touches[0].clientX - centerX) < tileRect.width / 3 &&
-                Math.abs(event.touches[0].clientY - centerY) < tileRect.height / 3)
-            {
-                tilesTraced[tilesTraced.length - 1].classList.remove('touched');
-                lastTilePressed = target;
-                tilesTraced.pop();
-            }
+    }
+    //if the tile is the one touched previously, undo the last tile highlight
+    else if (target === tilesTraced[tilesTraced.length - 2]) {
+        const tileRect = target.getBoundingClientRect();
+        const centerX = tileRect.left + tileRect.width / 2;
+        const centerY = tileRect.top + tileRect.height / 2;
+        if (Math.abs(x - centerX) < tileRect.width / 3 &&
+            Math.abs(y - centerY) < tileRect.height / 3)
+        {
+            tilesTraced[tilesTraced.length - 1].classList.remove('touched');
+            lastTilePressed = target;
+            tilesTraced.pop();
         }
     }
 }
