@@ -1,6 +1,7 @@
 import { addNewTile, dropTiles } from "./tile.js";
 import { setupInputHandler } from "./input.js";
 import { exitFullScreen, rareLetterScoreBonus } from "./utils.js";
+import { CanvasOverlay } from "./canvas-overlay.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
@@ -29,6 +30,7 @@ export class Game {
         this.wordList = [];
         this.fetchWordLists();
 
+        this.canvasOverlay = new CanvasOverlay();
         this.score = 0;
         this.scoreboard = document.getElementById('score');
         
@@ -65,6 +67,8 @@ export class Game {
                 this.newTileTimer = 0;
             }
 
+            this.canvasOverlay.update();
+
             //body turns red to warn player
             if (this.cells.filter(cell => cell.classList.contains('empty')).length < 10) {
                 document.body.style.backgroundColor = '#E0425A';
@@ -93,11 +97,15 @@ export class Game {
     /**
      * Increase the score based on the the word formed
      * @param {string} word
+     * @param {number} x coordinate of score pop-up
+     * @param {number} y coordinate of score pop-up
      */
-    increaseScore(word) {
-        let bonus = rareLetterScoreBonus(word);
-        this.score += word.length * (word.length - 2) + bonus;
+    increaseScore(word, x, y) {
+        let bonusInfo = rareLetterScoreBonus(word);
+        let points = word.length * (word.length - 2) + bonusInfo[0];
+        this.score += points;
         this.scoreboard.innerHTML = this.score;
+        this.canvasOverlay.addScoreText(x, y, points, bonusInfo[1]);
     }
     /**
      * Reset the game

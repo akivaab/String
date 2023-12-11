@@ -74,13 +74,13 @@ export function setupInputHandler(game) {
     });
     document.addEventListener('mouseup', () => {
         isMousePressed = false;
+        checkWordValidity(game, lastTilePressed);
         lastTilePressed = null;
-        checkWordValidity(game);
     });
     game.grid.addEventListener('mouseleave', () => {  //NOTE: deletable if you choose
         isMousePressed = false;
+        checkWordValidity(game, lastTilePressed);
         lastTilePressed = null;
-        checkWordValidity(game);
     });
     game.grid.addEventListener('mousemove', handleMouseMove);
 
@@ -89,8 +89,8 @@ export function setupInputHandler(game) {
     });
     document.addEventListener('touchend', () => {
         isTouchPressed = false;
+        checkWordValidity(game, lastTilePressed);
         lastTilePressed = null;
-        checkWordValidity(game);
     });
     game.grid.addEventListener('touchmove', handleTouchMove);
 
@@ -142,9 +142,10 @@ export function setupInputHandler(game) {
 
 /**
  * Check if the word formed is a valid word
- * @param {Game} game 
+ * @param {Game} game
+ * @param {HTMLDivElement} lastTile
  */
-function checkWordValidity(game) {
+function checkWordValidity(game, lastTile) {
     let wordTraced = "";
     tilesTraced.forEach(tile => wordTraced += tile.innerHTML);
 
@@ -173,7 +174,8 @@ function checkWordValidity(game) {
                 listContainer.appendChild(newWord);
             });
             //increase score
-            game.increaseScore(wordTraced);
+            const tileRect = lastTile.getBoundingClientRect();
+            game.increaseScore(wordTraced, tileRect.x + tileRect.width / 2, tileRect.y + tileRect.height / 2);
             tilesTraced = [];
         }
         //if word is not valid

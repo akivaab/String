@@ -36,18 +36,22 @@ export function randomAtoZ() {
 /**
  * Calculate a score bonus for using rare letters based on their rarity
  * @param {string} word
- * @returns {number} score bonus
+ * @returns {[number, char[]]} score bonus
  */
 export function rareLetterScoreBonus(word) {
     let bonus = 0;
+    let bonusLetters = [];
     for (let i = 0; i < word.length; i++) {
         let letterIndex = letters.findIndex(letter => letter === word[i].toUpperCase());
         if (letterIndex != -1) {
             let frequency = frequencies[letterIndex] - (letterIndex - 1 < 0 ? 0 : frequencies[letterIndex - 1]);
-            if (frequency < 1000) bonus += 0.025 / (frequency / 100000);
+            if (frequency < 1000) {
+                bonus += 0.025 / (frequency / 100000);
+                bonusLetters.push(letters[letterIndex]);
+            }
         }
     }
-    return Math.ceil(bonus);
+    return [Math.ceil(bonus), bonusLetters];
 }
 
 /**
