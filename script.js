@@ -40,7 +40,7 @@ export class Game {
         
         this.newTileTimer = 0;
         // 1327, 2003, 2657 are the key intervals
-        this.newTileIntervals = [1031, 1103, 1217, 1327, 1433, 1559, 1669, 1789, 1901, 2003, 2111, 2207, 2311, 2437, 2557, 2657];
+        this.newTileIntervals = [947, 1031, 1103, 1217, 1327, 1433, 1559, 1669, 1789, 1901, 2003, 2111, 2207, 2311, 2437, 2557, 2657];
         this.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
         this.newTileInterval = this.newTileIntervals[this.newTileIntervalIndex];
         this.dropTileTimer = 0;
@@ -80,7 +80,7 @@ export class Game {
             //increase new tile frequency when score reaches certain intervals
             if (this.score > this.scoreToChangeNewTileInterval) {
                 this.scoreToChangeNewTileInterval += 150;
-                this.newTileIntervalIndex = this.newTileIntervalIndex < 0 ? 0 : this.newTileIntervalIndex - 1;
+                this.newTileIntervalIndex = this.newTileIntervalIndex <= 0 ? 0 : this.newTileIntervalIndex - 1;
                 this.newTileInterval = this.newTileIntervals[this.newTileIntervalIndex];
             }
 
