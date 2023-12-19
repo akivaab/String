@@ -26,8 +26,8 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(10, 1fr);
-    max-height: calc(100vh - 40px); /* Set the maximum height to fit the viewport */
-    width: calc((100vh - 40px) / 10 * 5); /* Calculate the width based on 10 rows and 5 columns, maintaining 1:1 aspect ratio */
+    max-height: calc(100vh - 20px); /* Set the maximum height to fit the viewport */
+    width: calc((100vh - 48px) / 10 * 5); /* Calculate the width based on 10 rows and 5 columns, maintaining 1:1 aspect ratio */
     margin: 20px;
     border: 1px solid #000;
     -webkit-touch-callout: none;
@@ -72,6 +72,22 @@ body {
 
 .tile.incorrect {
     background-color: #FF0000;
+}
+
+#pause-button {
+    position: absolute;
+    width: 20px;
+    height: calc((100vh - 48px) / 20); /* Half of the height of a cell (considering 1px border) */
+    background-color: white;
+    color: black;
+    border-style: outset;
+    border-width: 1px;
+    border-color: #B0E0E6;
+    cursor: pointer;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 2vh;
+    font-weight: 800;
+    border-radius: 5px;
 }
 
 /** Start, Pause, Over screens */

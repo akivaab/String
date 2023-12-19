@@ -123,6 +123,12 @@ export function setupInputHandler(game) {
             lastClickTime = currentTime;
         }
     });
+    document.getElementById('pause-button').addEventListener('click', () => {
+        exitFullScreen();
+        game.paused = true;
+        document.getElementById('canvas').style.display = 'none';
+        document.getElementById('pause-screen').style.display = 'block';
+    });
     document.querySelectorAll('.list-container').forEach((list) => {
         list.addEventListener('click', (e) => {
             if (e.target.tagName === 'LI') window.open("https://www.thefreedictionary.com/" + e.target.innerHTML, "_blank");

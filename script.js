@@ -5,7 +5,6 @@ import { CanvasOverlay } from "./canvas-overlay.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
-
     let lastTime = 0;
     function gameLoop(timeStamp) {
         let deltaTime = timeStamp - lastTime;
@@ -29,6 +28,7 @@ export class Game {
         
         this.wordList = [];
         this.fetchWordLists();
+        this.positionButtons();
 
         this.canvasOverlay = new CanvasOverlay();
         this.score = 0;
@@ -158,5 +158,27 @@ export class Game {
                 })
         ]);
         this.wordList = [...wordList1, ...wordList2];
+    }
+    /**
+     * Dynamically position menu buttons around the grid
+     */
+    positionButtons() {
+        const pauseButton = document.getElementById('pause-button');
+        const gridRect = this.grid.getBoundingClientRect();
+        let spaceRight = window.innerWidth - gridRect.right;
+        let spaceTop = gridRect.top;
+        if (spaceRight > spaceTop) {
+            pauseButton.style.height = gridRect.height / (2 * this.numRows) + 'px';
+            pauseButton.style.width = Math.min(spaceRight - 2, gridRect.width / (2 * this.numColumns)) + 'px';
+            pauseButton.style.top = gridRect.top + 'px';
+            pauseButton.style.left = gridRect.right + 2 + 'px';
+        } 
+        else {
+            pauseButton.style.width = gridRect.width / (2 * this.numColumns) + 'px';
+            pauseButton.style.height = Math.min(spaceTop + 2, gridRect.height / (2 * this.numRows)) + 'px';
+            const buttonRect = pauseButton.getBoundingClientRect();
+            pauseButton.style.top = gridRect.top - buttonRect.height - 2 + 'px';
+            pauseButton.style.left = gridRect.right - buttonRect.width + 'px';
+        }
     }
 }
