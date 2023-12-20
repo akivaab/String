@@ -175,7 +175,7 @@ export class Game {
         } 
         else {
             pauseButton.style.width = gridRect.width / (2 * this.numColumns) + 'px';
-            pauseButton.style.height = Math.min(spaceTop + 2, gridRect.height / (2 * this.numRows)) + 'px';
+            pauseButton.style.height = Math.min(spaceTop - 2, gridRect.height / (2 * this.numRows)) + 'px';
             const buttonRect = pauseButton.getBoundingClientRect();
             pauseButton.style.top = gridRect.top - buttonRect.height - 2 + 'px';
             pauseButton.style.left = gridRect.right - buttonRect.width + 'px';

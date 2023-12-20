@@ -144,6 +144,9 @@ export function setupInputHandler(game) {
         launchFullScreen(document.documentElement);
         game.reset();
     });
+    window.addEventListener('resize', () => {
+        game.positionButtons();
+      });
 }
 
 /**

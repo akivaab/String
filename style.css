@@ -76,8 +76,6 @@ body {
 
 #pause-button {
     position: absolute;
-    width: 20px;
-    height: calc((100vh - 48px) / 20); /* Half of the height of a cell (considering 1px border) */
     background-color: white;
     color: black;
     border-style: outset;
@@ -85,7 +83,6 @@ body {
     border-color: #B0E0E6;
     cursor: pointer;
     font-family:'Times New Roman', Times, serif;
-    font-size: 2vh;
     font-weight: 800;
     border-radius: 5px;
 }
