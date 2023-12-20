@@ -81,10 +81,8 @@ body {
     border-style: outset;
     border-width: 1px;
     border-color: #B0E0E6;
-    cursor: pointer;
-    font-family:'Times New Roman', Times, serif;
-    font-weight: 800;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 /** Start, Pause, Over screens */
