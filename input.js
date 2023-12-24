@@ -1,3 +1,4 @@
+import { playAudio, toggleMute } from "./audio.js";
 import { Game } from "./script.js";
 import { isAdjacent, markAboveAsFalling } from "./tile.js";
 import { launchFullScreen, exitFullScreen } from "./utils.js";
@@ -102,6 +103,7 @@ export function setupInputHandler(game) {
         document.getElementById('canvas').style.display = 'block';
         game.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
         game.newTileInterval = game.newTileIntervals[game.newTileIntervalIndex];
+        playAudio();
         
         //set game over screen difficulty selection to match start screen
         const difficultyOptions = document.querySelectorAll('input[name="difficulty2"]');
@@ -129,6 +131,9 @@ export function setupInputHandler(game) {
         document.getElementById('canvas').style.display = 'none';
         document.getElementById('pause-screen').style.display = 'block';
     });
+    document.getElementById('mute-button').addEventListener('click', () => {
+        toggleMute();
+    })
     document.querySelectorAll('.list-container').forEach((list) => {
         list.addEventListener('click', (e) => {
             if (e.target.tagName === 'LI') window.open("https://www.thefreedictionary.com/" + e.target.innerHTML, "_blank");

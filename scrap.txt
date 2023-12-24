@@ -100,3 +100,11 @@ document.querySelectorAll('.list-container').forEach((list) => {
             }
         });
     });
+
+
+const observer = new MutationObserver((mutationList, observer) => {
+    for (const mutation of mutationList) {
+      if (mutation.type === "attributes" && mutation.attributeName == "style") changeAudioSpeed();
+    }
+  });
+observer.observe(document.body, { attributes: true });

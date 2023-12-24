@@ -85,6 +85,17 @@ body {
     cursor: pointer;
 }
 
+#mute-button {
+    position: absolute;
+    background-color: white;
+    color: black;
+    border-style: outset;
+    border-width: 1px;
+    border-color: #FFD700;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /** Start, Pause, Over screens */
 .screen-content {
     position: relative;
