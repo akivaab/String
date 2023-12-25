@@ -150,7 +150,7 @@ export function setupInputHandler(game) {
         game.reset();
     });
     window.addEventListener('resize', () => {
-        game.positionButtons();
+        game.positionHeader();
       });
 }
 

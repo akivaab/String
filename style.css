@@ -75,6 +75,14 @@ body {
     background-color: #FF0000;
 }
 
+#onscreen-score-header {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    font-family: 'Sacramento', cursive;
+    font-size: 3.8vh;
+  }
+
 #pause-button {
     position: absolute;
     background-color: white;

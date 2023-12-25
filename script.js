@@ -29,11 +29,11 @@ export class Game {
         
         this.wordList = [];
         this.fetchWordLists();
-        this.positionButtons();
+        this.positionHeader();
 
         this.canvasOverlay = new CanvasOverlay();
         this.score = 0;
-        this.scoreboard = document.getElementById('score');
+        this.scoreboards = document.querySelectorAll('.score');
         
         this.onStart = true;
         this.paused = false;
@@ -49,7 +49,7 @@ export class Game {
         this.scoreToChangeNewTileInterval = 150;
         
         setupInputHandler(this);
-        this.scoreboard.innerHTML = this.score;
+        this.scoreboards.forEach(scoreboard => scoreboard.innerHTML = this.score);
     }
     /**
      * Update the game
@@ -94,7 +94,6 @@ export class Game {
                 this.gameOver = true;
                 document.getElementById('canvas').style.display = 'none';
                 document.getElementById('game-over-screen').style.display = 'block';
-                document.getElementById('final-score').innerHTML = this.score;
             }
         }
     }
@@ -108,7 +107,7 @@ export class Game {
         let bonusInfo = rareLetterScoreBonus(word);
         let points = word.length * (word.length - 2) + bonusInfo[0];
         this.score += points;
-        this.scoreboard.innerHTML = this.score;
+        this.scoreboards.forEach(scoreboard => scoreboard.innerHTML = this.score);
         this.canvasOverlay.addScoreText(x, y, points, bonusInfo[1]);
     }
     /**
@@ -125,7 +124,7 @@ export class Game {
         document.getElementById('game-over-screen').style.display = 'none';
         document.getElementById('canvas').style.display = 'block';
         this.score = 0;
-        this.scoreboard.innerHTML = this.score;
+        this.scoreboards.forEach(scoreboard => scoreboard.innerHTML = this.score);
         const scrollableLists = document.querySelectorAll('.scrollable-list');
         scrollableLists.forEach(scrollableList => {
             scrollableList.style.display = 'none';
@@ -166,11 +165,12 @@ export class Game {
     /**
      * Dynamically position menu buttons around the grid
      */
-    positionButtons() {
+    positionHeader() {
         const pauseButton = document.getElementById('pause-button');
         const muteButton = document.getElementById('mute-button');
+        const onscreenScoreHeader = document.getElementById('onscreen-score-header');
         const gridRect = this.grid.getBoundingClientRect();
-        
+
         pauseButton.style.width = gridRect.width / (2 * this.numColumns) + 'px';
         pauseButton.style.height = Math.min(gridRect.top - 2, gridRect.height / (2 * this.numRows)) + 'px';
         const pauseButtonRect = pauseButton.getBoundingClientRect();
@@ -182,5 +182,11 @@ export class Game {
         const muteButtonRect = muteButton.getBoundingClientRect();
         muteButton.style.top = gridRect.top - muteButtonRect.height - 2 + 'px';
         muteButton.style.left = gridRect.right - pauseButtonRect.width - 2 - muteButtonRect.width + 'px';
+
+        onscreenScoreHeader.style.width = gridRect.width / 2 + 'px';
+        onscreenScoreHeader.style.height = Math.min(gridRect.top - 2, gridRect.height / (2 * this.numRows)) + 'px';
+        const onscreenScoreHeaderRect = onscreenScoreHeader.getBoundingClientRect();
+        onscreenScoreHeader.style.top = gridRect.top - onscreenScoreHeaderRect.height - 2 + 'px';
+        onscreenScoreHeader.style.left = gridRect.left + 'px';
     }
 }
