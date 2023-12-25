@@ -170,31 +170,17 @@ export class Game {
         const pauseButton = document.getElementById('pause-button');
         const muteButton = document.getElementById('mute-button');
         const gridRect = this.grid.getBoundingClientRect();
-        let spaceRight = window.innerWidth - gridRect.right;
-        let spaceTop = gridRect.top;
-        if (spaceRight > spaceTop) {
-            pauseButton.style.height = gridRect.height / (2 * this.numRows) + 'px';
-            pauseButton.style.width = Math.min(spaceRight - 2, gridRect.width / (2 * this.numColumns)) + 'px';
-            pauseButton.style.top = gridRect.top + 'px';
-            pauseButton.style.left = gridRect.right + 2 + 'px';
+        
+        pauseButton.style.width = gridRect.width / (2 * this.numColumns) + 'px';
+        pauseButton.style.height = Math.min(gridRect.top - 2, gridRect.height / (2 * this.numRows)) + 'px';
+        const pauseButtonRect = pauseButton.getBoundingClientRect();
+        pauseButton.style.top = gridRect.top - pauseButtonRect.height - 2 + 'px';
+        pauseButton.style.left = gridRect.right - pauseButtonRect.width + 'px';
 
-            muteButton.style.height = gridRect.height / (2 * this.numRows) + 'px';
-            muteButton.style.width = Math.min(spaceRight - 2, gridRect.width / (2 * this.numColumns)) + 'px';
-            muteButton.style.top = gridRect.top - pauseButton.style.height - 2 + 'px';
-            muteButton.style.left = gridRect.right + 2 + 'px';
-        } 
-        else {
-            pauseButton.style.width = gridRect.width / (2 * this.numColumns) + 'px';
-            pauseButton.style.height = Math.min(spaceTop - 2, gridRect.height / (2 * this.numRows)) + 'px';
-            const pauseButtonRect = pauseButton.getBoundingClientRect();
-            pauseButton.style.top = gridRect.top - pauseButtonRect.height - 2 + 'px';
-            pauseButton.style.left = gridRect.right - pauseButtonRect.width + 'px';
-
-            muteButton.style.width = gridRect.width / (2 * this.numColumns) + 'px';
-            muteButton.style.height = Math.min(spaceTop - 2, gridRect.height / (2 * this.numRows)) + 'px';
-            const muteButtonRect = muteButton.getBoundingClientRect();
-            muteButton.style.top = gridRect.top - muteButtonRect.height - 2 + 'px';
-            muteButton.style.left = gridRect.right - pauseButtonRect.width - 2 - muteButtonRect.width + 'px';
-        }
+        muteButton.style.width = gridRect.width / (2 * this.numColumns) + 'px';
+        muteButton.style.height = Math.min(gridRect.top - 2, gridRect.height / (2 * this.numRows)) + 'px';
+        const muteButtonRect = muteButton.getBoundingClientRect();
+        muteButton.style.top = gridRect.top - muteButtonRect.height - 2 + 'px';
+        muteButton.style.left = gridRect.right - pauseButtonRect.width - 2 - muteButtonRect.width + 'px';
     }
 }

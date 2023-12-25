@@ -26,9 +26,10 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(10, 1fr);
-    max-height: calc(100vh - 20px); /* Set the maximum height to fit the viewport */
+    max-height: calc(100vh - 48px); /* Set the maximum height to fit the viewport */
     width: calc((100vh - 48px) / 10 * 5); /* Calculate the width based on 10 rows and 5 columns, maintaining 1:1 aspect ratio */
     margin: 20px;
+    margin-top: calc((100vh - 48px) / 10 / 2); /* Add space at the top equal to half the height of a cell */
     border: 1px solid #000;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
