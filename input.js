@@ -1,4 +1,3 @@
-import { playAudio, toggleMute } from "./audio.js";
 import { Game } from "./script.js";
 import { isAdjacent, markAboveAsFalling } from "./tile.js";
 import { launchFullScreen, exitFullScreen } from "./utils.js";
@@ -103,7 +102,7 @@ export function setupInputHandler(game) {
         document.getElementById('canvas').style.display = 'block';
         game.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
         game.newTileInterval = game.newTileIntervals[game.newTileIntervalIndex];
-        playAudio();
+        game.audioPlayer.playAudio();
         
         //set game over screen difficulty selection to match start screen
         const difficultyOptions = document.querySelectorAll('input[name="difficulty2"]');
@@ -121,6 +120,7 @@ export function setupInputHandler(game) {
                 game.paused = true;
                 document.getElementById('canvas').style.display = 'none';
                 document.getElementById('pause-screen').style.display = 'block';
+                game.audioPlayer.currentMusic.volume /= 2;
             }
             lastClickTime = currentTime;
         }
@@ -130,9 +130,10 @@ export function setupInputHandler(game) {
         game.paused = true;
         document.getElementById('canvas').style.display = 'none';
         document.getElementById('pause-screen').style.display = 'block';
+        game.audioPlayer.currentMusic.volume /= 2;
     });
     document.getElementById('mute-button').addEventListener('click', () => {
-        toggleMute();
+        game.audioPlayer.toggleMute();
     })
     document.querySelectorAll('.list-container').forEach((list) => {
         list.addEventListener('click', (e) => {
@@ -144,6 +145,7 @@ export function setupInputHandler(game) {
         game.paused = false;
         document.getElementById('pause-screen').style.display = 'none';
         document.getElementById('canvas').style.display = 'block';
+        game.audioPlayer.currentMusic.volume *= 2;
     });
     document.getElementById('play-again-button').addEventListener('click', () => {
         launchFullScreen(document.documentElement);

@@ -2,7 +2,7 @@ import { addNewTile, dropTiles } from "./tile.js";
 import { setupInputHandler } from "./input.js";
 import { exitFullScreen, rareLetterScoreBonus } from "./utils.js";
 import { CanvasOverlay } from "./canvas-overlay.js";
-import { loopAudioCheck, slowDownAudio, speedUpAudio } from "./audio.js";
+import { AudioPlayer } from "./audio.js";
 
 window.addEventListener('DOMContentLoaded', function() {
     const game = new Game();
@@ -32,6 +32,7 @@ export class Game {
         this.positionHeader();
 
         this.canvasOverlay = new CanvasOverlay();
+        this.audioPlayer = new AudioPlayer();
         this.score = 0;
         this.scoreboards = document.querySelectorAll('.score');
         
@@ -56,7 +57,7 @@ export class Game {
      * @param {number} deltaTime 
      */
     update(deltaTime) {
-        loopAudioCheck();
+        this.audioPlayer.loopAudioCheck();
         if (!this.onStart && !this.paused && !this.gameOver) {
             this.newTileTimer += deltaTime;
             this.dropTileTimer += deltaTime;
@@ -74,11 +75,11 @@ export class Game {
             //body turns red to warn player
             if (this.cells.filter(cell => cell.classList.contains('empty')).length < 10) {
                 document.body.style.backgroundColor = '#E0425A';
-                speedUpAudio();
+                this.audioPlayer.speedUpAudio();
             }
             else {
                 document.body.style.backgroundColor = '#EDEDED';
-                slowDownAudio();
+                this.audioPlayer.slowDownAudio();
             }
 
             //increase new tile frequency when score reaches certain intervals
@@ -94,6 +95,7 @@ export class Game {
                 this.gameOver = true;
                 document.getElementById('canvas').style.display = 'none';
                 document.getElementById('game-over-screen').style.display = 'block';
+                this.audioPlayer.fadeOutAudio();
             }
         }
     }
@@ -133,6 +135,7 @@ export class Game {
                 listContainer.removeChild(listContainer.firstChild);
             }
         });
+        this.audioPlayer.playAudio();
     }
     /**
      * Fetch the files of possible words
