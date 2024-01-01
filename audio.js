@@ -12,6 +12,8 @@ export class AudioPlayer {
         this.music80Section = 63;
         this.music80Total = 630;
         this.currentMusic = this.music60;
+        /** @type {SVGElement} */ this.soundMutedDisplay = document.getElementById('volume-cross');
+        /** @type {SVGElement} */ this.soundOnDisplay = document.getElementById('volume-high');
     }
     /**
      * Mute/unmute the background music
@@ -19,6 +21,14 @@ export class AudioPlayer {
     toggleMute() {
         this.music60.muted = !this.music60.muted;
         this.music80.muted = !this.music80.muted;
+        if (this.soundOnDisplay.style.display == 'none') {
+            this.soundMutedDisplay.style.display = 'none';
+            this.soundOnDisplay.style.display = 'flex';
+        }
+        else {
+            this.soundOnDisplay.style.display = 'none';
+            this.soundMutedDisplay.style.display = 'flex';
+        }
     }
     /**
      * Begin to play the background music
