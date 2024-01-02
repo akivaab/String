@@ -84,22 +84,20 @@ body {
     font-size: 3.8vh;
   }
 
-  #pause-button,
-  #mute-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      padding: 0;
-      border: 0;
-      cursor: pointer;
-  }
+#pause-button, #mute-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
   
-  #pause-button svg,
-  #mute-button svg {
-      width: 100%;
-      height: 100%;
-  }
+#pause-button svg, #mute-button svg {
+    width: 100%;
+    height: 100%;
+}
 
 /** Start, Pause, Over screens */
 .screen-content {
