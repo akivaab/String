@@ -184,7 +184,7 @@ export class Game {
         muteButton.style.height = Math.min(gridRect.top - 2, gridRect.height / (2 * this.numRows)) + 'px';
         const muteButtonRect = muteButton.getBoundingClientRect();
         muteButton.style.top = gridRect.top - muteButtonRect.height - 2 + 'px';
-        muteButton.style.left = gridRect.right - pauseButtonRect.width - 2 - muteButtonRect.width + 'px';
+        muteButton.style.left = gridRect.right - muteButtonRect.width - 2 - muteButtonRect.width + 'px';
 
         onscreenScoreHeader.style.width = gridRect.width / 2 + 'px';
         onscreenScoreHeader.style.height = Math.min(gridRect.top - 2, gridRect.height / (2 * this.numRows)) + 'px';

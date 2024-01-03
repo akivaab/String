@@ -108,3 +108,13 @@ const observer = new MutationObserver((mutationList, observer) => {
     }
   });
 observer.observe(document.body, { attributes: true });
+
+
+Match screen-content to grid's dimensions:
+
+document.querySelectorAll('.screen-content').forEach(screen => {
+            const paddingVertical = parseInt(getComputedStyle(screen).paddingTop) + parseInt(getComputedStyle(screen).paddingBottom);
+            const paddingHorizontal = parseInt(getComputedStyle(screen).paddingLeft) + parseInt(getComputedStyle(screen).paddingRight);
+            screen.style.height = (gridRect.height - paddingVertical) + 'px';
+            screen.style.width = (gridRect.width - paddingHorizontal) + 'px';
+});
