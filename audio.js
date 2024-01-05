@@ -3,15 +3,13 @@ export class AudioPlayer {
      * @constructor
      */
     constructor() {
-        /** @type {HTMLAudioElement} */ this.music60 = document.getElementById('music60');
-        /** @type {HTMLAudioElement} */ this.music80 = document.getElementById('music80');
-        this.music60.volume = 0.4;
-        this.music80.volume = 0.4;
-        this.music60Section = 84;
-        this.music60Total = 840;
-        this.music80Section = 63;
-        this.music80Total = 630;
-        this.currentMusic = this.music60;
+        /** @type {HTMLAudioElement} */ this.normalMusic = document.getElementById('normal-music');
+        /** @type {HTMLAudioElement} */ this.fastMusic = document.getElementById('fast-music');
+        this.normalMusic.volume = 0.4;
+        this.fastMusic.volume = 0.4;
+        this.normalMusicTotal = 113.258;
+        this.fastMusicTotal = 75.506;
+        this.currentMusic = this.normalMusic;
         /** @type {SVGElement} */ this.soundMutedDisplay = document.getElementById('volume-cross');
         /** @type {SVGElement} */ this.soundOnDisplay = document.getElementById('volume-high');
     }
@@ -19,8 +17,8 @@ export class AudioPlayer {
      * Mute/unmute the background music
      */
     toggleMute() {
-        this.music60.muted = !this.music60.muted;
-        this.music80.muted = !this.music80.muted;
+        this.normalMusic.muted = !this.normalMusic.muted;
+        this.fastMusic.muted = !this.fastMusic.muted;
         if (this.soundOnDisplay.style.display == 'none') {
             this.soundMutedDisplay.style.display = 'none';
             this.soundOnDisplay.style.display = 'flex';
@@ -40,29 +38,29 @@ export class AudioPlayer {
      * Check if the background music reached its end and must be looped
      */
     loopAudioCheck() {
-        if (this.currentMusic === this.music60 && this.music60.currentTime >= this.music60Total) {
-            this.music60.currentTime = 0;
+        if (this.currentMusic === this.normalMusic && this.normalMusic.currentTime >= this.normalMusicTotal) {
+            this.normalMusic.currentTime = 0;
         }
-        else if (this.currentMusic === this.music80 && this.music80.currentTime >= this.music80Total) {
-            this.music80.currentTime = 0;
+        else if (this.currentMusic === this.fastMusic && this.fastMusic.currentTime >= this.fastMusicTotal) {
+            this.fastMusic.currentTime = 0;
         }
     }
     /**
      * Change the background music from the slower version to the faster one
      */
     speedUpAudio() {
-        if (this.currentMusic === this.music60) {
-            this.currentMusic = this.music80;
-            this.switchFromTo(this.music60, this.music80, 0.75, this.music80Section);
+        if (this.currentMusic === this.normalMusic) {
+            this.currentMusic = this.fastMusic;
+            this.switchFromTo(this.normalMusic, this.fastMusic, 2 / 3);
         }
     }
     /**
      * Change the background music from the faster version to the slower one
      */
     slowDownAudio() {
-        if (this.currentMusic === this.music80) {
-            this.currentMusic = this.music60;
-            this.switchFromTo(this.music80, this.music60, 4 / 3, this.music60Section);
+        if (this.currentMusic === this.fastMusic) {
+            this.currentMusic = this.normalMusic;
+            this.switchFromTo(this.fastMusic, this.normalMusic, 1.5);
         }
     }
     /**
@@ -70,16 +68,12 @@ export class AudioPlayer {
      * @param {HTMLAudioElement} curMusic
      * @param {HTMLAudioElement} newMusic
      * @param {number} beatRatio the bpm of the current music divided by the bpm of the new music
-     * @param {number} newMusicSection the length of a section of music before it loops
      */
-    switchFromTo(curMusic, newMusic, beatRatio, newMusicSection) {
+    switchFromTo(curMusic, newMusic, beatRatio) {
         let curTime = curMusic.currentTime;
         curMusic.pause();
         curMusic.currentTime = 0;
         let newTime = curTime * beatRatio;
-        while (newTime >= newMusicSection) {
-            newTime -= newMusicSection;
-        }
         newMusic.currentTime = newTime;
         newMusic.play();
     }
@@ -92,10 +86,10 @@ export class AudioPlayer {
             if (this.currentMusic.volume <= 0.02) {
                 clearInterval(fadeoutInterval);
                 this.currentMusic.pause();
-                this.currentMusic = this.music60;
+                this.currentMusic = this.normalMusic;
                 this.currentMusic.currentTime = 0;
-                this.music60.volume = 0.4;
-                this.music80.volume = 0.4;
+                this.normalMusic.volume = 0.4;
+                this.fastMusic.volume = 0.4;
             }
         }, 200);
     }
