@@ -1,6 +1,6 @@
 import { addNewTile, dropTiles } from "./tile.js";
 import { setupInputHandler } from "./input.js";
-import { exitFullScreen, rareLetterScoreBonus } from "./utils.js";
+import { exitFullScreen, rareLetterScoreBonus, isMobileBrowser } from "./utils.js";
 import { CanvasOverlay } from "./canvas-overlay.js";
 import { AudioPlayer } from "./audio.js";
 
@@ -169,6 +169,10 @@ export class Game {
      * Dynamically position menu buttons around the grid
      */
     positionHeader() {
+        if (!isMobileBrowser()) {
+            document.getElementById('fullscreen-notice').style.display = 'none';
+        }
+
         const pauseButton = document.getElementById('pause-button');
         const muteButton = document.getElementById('mute-button');
         const onscreenScoreHeader = document.getElementById('onscreen-score-header');
