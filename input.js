@@ -1,6 +1,5 @@
 import { Game } from "./script.js";
 import { isAdjacent, markAboveAsFalling } from "./tile.js";
-import { launchFullScreen, exitFullScreen } from "./utils.js";
 
 let isMousePressed = false;
 let isTouchPressed = false;
@@ -8,7 +7,6 @@ let lastTilePressed = null;
 let tilesTraced = [];
 const correctnessFlashTime = 79; //tiles flash green or red depending on vaildity of word formed
 const scrollableLists = document.querySelectorAll('.scrollable-list');
-let lastClickTime = 0;
 
 /**
  * Handle events caused by mouse movement
@@ -96,41 +94,10 @@ export function setupInputHandler(game) {
 
     //UI-related events
     document.getElementById('start-button').addEventListener('click', () => {
-        launchFullScreen(document.documentElement);
-        game.onStart = false;
-        document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('canvas').style.display = 'block';
-        game.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
-        game.newTileInterval = game.newTileIntervals[game.newTileIntervalIndex];
-        game.audioPlayer.playAudio();
-        
-        //set game over screen difficulty selection to match start screen
-        const difficultyOptions = document.querySelectorAll('input[name="difficulty2"]');
-        difficultyOptions.forEach((difficultyOption) => {
-            if (difficultyOption.value === game.newTileIntervalIndex) difficultyOption.checked = true;
-            else difficultyOption.checked = false;
-        });
-    });
-    document.addEventListener('click', () => {
-        if (!game.onStart && !game.paused && !game.gameOver) {
-            const currentTime = new Date().getTime();
-            const timeDifference = currentTime - lastClickTime;
-            if (timeDifference < 250) {
-                exitFullScreen();
-                game.paused = true;
-                document.getElementById('canvas').style.display = 'none';
-                document.getElementById('pause-screen').style.display = 'block';
-                game.audioPlayer.currentMusic.volume /= 2;
-            }
-            lastClickTime = currentTime;
-        }
+        game.start();
     });
     document.getElementById('pause-button').addEventListener('click', () => {
-        exitFullScreen();
-        game.paused = true;
-        document.getElementById('canvas').style.display = 'none';
-        document.getElementById('pause-screen').style.display = 'block';
-        game.audioPlayer.currentMusic.volume /= 2;
+        game.pause();
     });
     document.getElementById('mute-button').addEventListener('click', () => {
         game.audioPlayer.toggleMute();
@@ -141,18 +108,13 @@ export function setupInputHandler(game) {
         });
     });
     document.getElementById('resume-button').addEventListener('click', () => {
-        launchFullScreen(document.documentElement);
-        game.paused = false;
-        document.getElementById('pause-screen').style.display = 'none';
-        document.getElementById('canvas').style.display = 'block';
-        game.audioPlayer.currentMusic.volume *= 2;
+        game.resume();
     });
     document.getElementById('play-again-button').addEventListener('click', () => {
-        launchFullScreen(document.documentElement);
         game.reset();
     });
     window.addEventListener('resize', () => {
-        game.positionHeader();
+        game.positionDynamically();
       });
 }
 

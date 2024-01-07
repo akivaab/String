@@ -1,5 +1,4 @@
-Original dictionary API use:
-
+//Original dictionary API use:
 function checkWordValidity(game) {
     let wordTraced = "";
     tilesTraced.forEach(tile => wordTraced += tile.innerHTML);
@@ -54,8 +53,7 @@ function checkWordValidity(game) {
 }
 
 
-Second dictionary attempt:
-
+//Second dictionary attempt:
 document.querySelectorAll('.list-container').forEach((list) => {
         list.addEventListener('click', (e) => {
             if (e.target.tagName === 'LI') {
@@ -110,11 +108,27 @@ const observer = new MutationObserver((mutationList, observer) => {
 observer.observe(document.body, { attributes: true });
 
 
-Match screen-content to grid's dimensions:
-
+//Match screen-content to grid's dimensions:
 document.querySelectorAll('.screen-content').forEach(screen => {
             const paddingVertical = parseInt(getComputedStyle(screen).paddingTop) + parseInt(getComputedStyle(screen).paddingBottom);
             const paddingHorizontal = parseInt(getComputedStyle(screen).paddingLeft) + parseInt(getComputedStyle(screen).paddingRight);
             screen.style.height = (gridRect.height - paddingVertical) + 'px';
             screen.style.width = (gridRect.width - paddingHorizontal) + 'px';
+});
+
+//Double tap to pause:
+let lastClickTime = 0;
+document.addEventListener('click', () => {
+    if (!game.onStart && !game.paused && !game.gameOver) {
+        const currentTime = new Date().getTime();
+        const timeDifference = currentTime - lastClickTime;
+        if (timeDifference < 250) {
+            exitFullScreen();
+            game.paused = true;
+            document.getElementById('canvas').style.display = 'none';
+            document.getElementById('pause-screen').style.display = 'block';
+            game.audioPlayer.currentMusic.volume /= 2;
+        }
+        lastClickTime = currentTime;
+    }
 });

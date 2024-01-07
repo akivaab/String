@@ -1,10 +1,13 @@
 import { addNewTile, dropTiles } from "./tile.js";
 import { setupInputHandler } from "./input.js";
-import { exitFullScreen, rareLetterScoreBonus, isMobileBrowser } from "./utils.js";
+import { launchFullScreen, exitFullScreen, rareLetterScoreBonus, isMobileBrowser } from "./utils.js";
 import { CanvasOverlay } from "./canvas-overlay.js";
 import { AudioPlayer } from "./audio.js";
 
 window.addEventListener('DOMContentLoaded', function() {
+    if (!isMobileBrowser()) {
+        document.getElementById('fullscreen-notice').style.display = 'none';
+    }
     const game = new Game();
     let lastTime = 0;
     function gameLoop(timeStamp) {
@@ -29,7 +32,7 @@ export class Game {
         
         this.wordList = [];
         this.fetchWordLists();
-        this.positionHeader();
+        this.positionDynamically();
 
         this.canvasOverlay = new CanvasOverlay();
         this.audioPlayer = new AudioPlayer();
@@ -113,9 +116,49 @@ export class Game {
         this.canvasOverlay.addScoreText(x, y, points, bonusInfo[1]);
     }
     /**
+     * Start the game
+     */
+    start() {
+        launchFullScreen(document.documentElement);
+        this.onStart = false;
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('canvas').style.display = 'block';
+        this.newTileIntervalIndex = document.querySelector('input[name="difficulty1"]:checked').value;
+        this.newTileInterval = this.newTileIntervals[this.newTileIntervalIndex];
+        this.audioPlayer.playAudio();
+        
+        //set game over screen difficulty selection to match start screen
+        const difficultyOptions = document.querySelectorAll('input[name="difficulty2"]');
+        difficultyOptions.forEach((difficultyOption) => {
+            if (difficultyOption.value === this.newTileIntervalIndex) difficultyOption.checked = true;
+            else difficultyOption.checked = false;
+        });
+    }
+    /**
+     * Pause the game
+     */
+    pause() {
+        exitFullScreen();
+        this.paused = true;
+        document.getElementById('canvas').style.display = 'none';
+        document.getElementById('pause-screen').style.display = 'block';
+        this.audioPlayer.currentMusic.volume /= 2;
+    }
+    /**
+     * Resume the game
+     */
+    resume() {
+        launchFullScreen(document.documentElement);
+        this.paused = false;
+        document.getElementById('pause-screen').style.display = 'none';
+        document.getElementById('canvas').style.display = 'block';
+        this.audioPlayer.currentMusic.volume *= 2;
+    }
+    /**
      * Reset the game
      */
     reset() {
+        launchFullScreen(document.documentElement);
         this.cells.forEach(cell => {
             cell.classList = 'cell empty';
             cell.innerHTML = '';
@@ -166,13 +209,9 @@ export class Game {
         this.wordList = [...wordList1, ...wordList2];
     }
     /**
-     * Dynamically position menu buttons around the grid
+     * Dynamically position buttons and other elements
      */
-    positionHeader() {
-        if (!isMobileBrowser()) {
-            document.getElementById('fullscreen-notice').style.display = 'none';
-        }
-
+    positionDynamically() {
         const pauseButton = document.getElementById('pause-button');
         const muteButton = document.getElementById('mute-button');
         const onscreenScoreHeader = document.getElementById('onscreen-score-header');
